@@ -21,7 +21,7 @@ class _CategoriesState extends State<Categories> {
     // TODO: implement initState
     super.initState();
     getCategories();
-    ProductList();
+    Product().getProducts();
   }
 
   @override
@@ -73,5 +73,6 @@ class _CategoriesState extends State<Categories> {
   void getCategories() async{
     categories =  await ProductType().getCategories();
   }
+
 }
 

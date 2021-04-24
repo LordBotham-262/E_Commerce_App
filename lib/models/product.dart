@@ -1,31 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/constants.dart';
 import 'package:shop_app/services/network_helper.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 
-
-class ProductList {
-  List<Product> products;
-
-  ProductList({
-    this.products,
-  });
-
-  factory ProductList.fromJson(List<dynamic> parsedJson) {
-
-    List<Product> photos = new List<Product>();
-    photos = parsedJson.map((i)=>Product.fromJson(i)).toList();
-
-    return new ProductList(
-        products: products
-    );
-  }
-}
+List<Product> products= [];
 
 class Product {
   final String image, title, description;
-  final int price, size, id;
+  final int price, size, id , type;
   final Color color;
   Product({
     this.id,
@@ -35,48 +16,27 @@ class Product {
     this.description,
     this.size,
     this.color,
+    this.type,
   });
 
-  factory Product.fromJson(Map<String, dynamic> json){
-    return new Product(
-      id: json['id'],
-            image: json['image'],
-            title: json['name'],
-            price: json['price'],
-            description: json['description'],
-            size: json['size'],
-            color: json['color'],
-    );
-  }
-
-
-
-  // void getProducts() async{
-  //   String url = KServerPath + "product";
-  //   final http.Response response = await http.get(Uri.parse(url));
-  //   final List<dynamic> responseData = json.decode(response.body);
-  //   responseData.forEach((product) {
-  //     final Product type = Product(
-  //       id: product['id'],
-  //       image: product['image'],
-  //       title: product['name'],
-  //       price: product['price'],
-  //       description: product['description'],
-  //       size: product['size'],
-  //       color: product['color'],
-  //     );
-  //     products.add(product);
-  //   });
-  //   print(products);
-  // }
-
+  void getProducts() async{
+      String url = KServerPath + "product";
+      List<dynamic> responseData = await networkHelper(url);
+      responseData.forEach((product) {
+        final Product data = Product(
+          id: product['id'],
+          image: KImagePath + product['image_path'],
+          title: product['name'],
+          price: product['price'],
+          description: product['description'],
+          size: product['size'],
+          color: Color(int.parse(product['color'])),
+          type: product['type'],
+        );
+        products.add(data);
+      });
+    }
 }
-
-
-
-
-
-
 
 // List<Product> products = [
 //   Product(
@@ -130,5 +90,5 @@ class Product {
 //   ),
 // ];
 
-String dummyText =
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since. When an unknown printer took a galley.";
+// String dummyText =
+//     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since. When an unknown printer took a galley.";
