@@ -3,10 +3,10 @@ import 'package:shop_app/models/productType.dart';
 import '../../../constants.dart';
 import 'package:shop_app/models/product.dart';
 
-
 // We need statefull widget for our categories
 
 class Categories extends StatefulWidget {
+
   @override
   _CategoriesState createState() => _CategoriesState();
 }
@@ -21,7 +21,7 @@ class _CategoriesState extends State<Categories> {
     // TODO: implement initState
     super.initState();
     getCategories();
-    Product().getProducts();
+    Product().getProducts(0);
   }
 
   @override
@@ -42,10 +42,12 @@ class _CategoriesState extends State<Categories> {
   Widget buildCategory(int index) {
     return GestureDetector(
       onTap: () {
-        setState(() {
+        setState((){
           selectedIndex = index;
+          Product().getProducts(ProductType().getCategoryId(categories[index]));
         });
       },
+
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
         child: Column(
@@ -71,7 +73,10 @@ class _CategoriesState extends State<Categories> {
   }
 
   void getCategories() async{
-    categories =  await ProductType().getCategories();
+    List<ProductType> data =  await ProductType().getCategories();
+    data.forEach((element) {
+      categories.add(element.productCat);
+    });
   }
 
 }

@@ -19,8 +19,9 @@ class Product {
     this.type,
   });
 
-  void getProducts() async{
-      String url = KServerPath + "product";
+  void getProducts(int categoryIndex) async{
+      products.clear();
+      String url = KServerPath + "product/category_id/"+ categoryIndex.toString() +"/product_id/0";
       List<dynamic> responseData = await networkHelper(url);
       responseData.forEach((product) {
         final Product data = Product(
@@ -35,6 +36,7 @@ class Product {
         );
         products.add(data);
       });
+      print(products);
     }
 }
 
