@@ -5,10 +5,9 @@ import 'package:shop_app/services/network_helper.dart';
 List<Product> products = [];
 
 class Product {
-  final String image, title, description;
   final int price, size, id, type;
   final Color color;
-
+  final String image, title, description;
   Product({
     this.id,
     this.image,

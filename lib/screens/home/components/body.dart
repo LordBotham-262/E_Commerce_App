@@ -6,8 +6,6 @@ import 'package:shop_app/screens/details/details_screen.dart';
 import 'categories.dart';
 import 'item_card.dart';
 
-
-
 class Body extends StatefulWidget {
   @override
   _BodyState createState() => _BodyState();
@@ -60,7 +58,7 @@ class _BodyState extends State<Body> {
                   // child : SpinKitDoubleBounce(
                   //         size: 100,
                   //         color: Colors.white,
-            //),
+                  //),
                 )
               : Expanded(
                   child: Padding(
