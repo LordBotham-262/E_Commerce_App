@@ -4,12 +4,15 @@ import 'package:shop_app/services/network_helper.dart';
 List<ProductType> categories = [];
 
 class ProductType {
-  ProductType({this.id, this.productCat,});
+  ProductType({
+    this.id,
+    this.productCat,
+  });
 
   final int id;
   final String productCat;
 
-  Future<List> getCategories() async{
+  Future<List> getCategories() async {
     String url = KServerPath + "product_type";
     List<dynamic> data = await networkHelper(url);
     data.forEach((productType) {
@@ -25,10 +28,10 @@ class ProductType {
   int getCategoryId(String cat) {
     int selectedCat = 0;
     categories.forEach((element) {
-        if(cat == element.productCat){
-          selectedCat = element.id;
-        }
-      });
+      if (cat == element.productCat) {
+        selectedCat = element.id;
+      }
+    });
     return selectedCat;
   }
 }
