@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/models/Product.dart';
+import 'package:shop_app/models/product.dart';
 
 import '../../../constants.dart';
 
@@ -45,7 +45,7 @@ class ItemCard extends StatelessWidget {
             ),
           ),
           Text(
-            "\$${product.price}",
+            "\₹ ${product.price}",
             style: TextStyle(fontWeight: FontWeight.bold),
           )
         ],

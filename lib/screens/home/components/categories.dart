@@ -1,48 +1,29 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:shop_app/screens/home/components/productType.dart';
+import 'package:shop_app/models/productType.dart';
 import '../../../constants.dart';
+
 // We need statefull widget for our categories
 
+// ignore: must_be_immutable
 class Categories extends StatefulWidget {
+  Categories(this.callback);
+
+  Function(int) callback;
+
   @override
   _CategoriesState createState() => _CategoriesState();
 }
 
 class _CategoriesState extends State<Categories> {
-  //List<String> categories = ['Dresses','T Shirts','Pants'];
   List<String> categories = [];
   // By default our first item will be selected
   int selectedIndex = 0;
 
   @override
-  void initState(){
+  void initState() {
     // TODO: implement initState
     super.initState();
-    getProduct_Type();
-  }
-
-  // void getProduct_Type() async {
-  //   var categories1 =  await ProductModel().getProductType();
-  //   for (var i = 0; i < categories1.length; i++) {
-  //     categories.add(categories1[i]['name']);
-  //   }
-  // }
-
-  void getProduct_Type() async{
-    final http.Response response = await http.get(Uri.parse("http://192.168.2.204:3000/product"));
-    final List<dynamic> responseData = json.decode(response.body);
-    responseData.forEach((productType) {
-      final ProductType type = ProductType(
-          id: productType['id'],
-          name: productType['name'],
-          price: productType['price']
-      );
-      setState(() {
-        categories.add(productType['name']);
-      });
-    });
+    getCategories();
   }
 
   @override
@@ -65,6 +46,11 @@ class _CategoriesState extends State<Categories> {
       onTap: () {
         setState(() {
           selectedIndex = index;
+          if (selectedIndex == 0) {
+            widget.callback(0);
+          } else {
+            widget.callback(ProductType().getCategoryId(categories[index]));
+          }
         });
       },
       child: Padding(
@@ -90,24 +76,11 @@ class _CategoriesState extends State<Categories> {
       ),
     );
   }
+
+  void getCategories() async {
+    List<ProductType> data = await ProductType().getCategories();
+    data.forEach((element) {
+      categories.add(element.productCat);
+    });
+  }
 }
-
-
-
-
-
-// class NetworkHelper {
-//   NetworkHelper(this.url);
-//
-//   final String url;
-//   Future getData() async {
-//     http.Response response = await http.get(Uri.parse(url));
-//     if (response.statusCode == 200) {
-//       String data = response.body;
-//       // print(data);
-//       return jsonDecode(data);
-//     } else {
-//       print(response.statusCode);
-//     }
-//   }
-// }
