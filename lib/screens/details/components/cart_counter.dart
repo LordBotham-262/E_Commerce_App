@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
 import '../../../constants.dart';
 
+// ignore: must_be_immutable
 class CartCounter extends StatefulWidget {
   CartCounter(this.numOfItems);
 
@@ -12,7 +12,6 @@ class CartCounter extends StatefulWidget {
 }
 
 class _CartCounterState extends State<CartCounter> {
-  //int numOfItems = 1;
   @override
   Widget build(BuildContext context) {
     return Row(

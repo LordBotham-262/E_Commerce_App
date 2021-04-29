@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shop_app/constants.dart';
 import 'package:shop_app/models/product.dart';
+import 'package:shop_app/models/productType.dart';
 import 'package:shop_app/screens/details/details_screen.dart';
 import 'categories.dart';
 import 'item_card.dart';
+
+List<String> categories = [];
 
 class Body extends StatefulWidget {
   @override
@@ -17,22 +20,37 @@ class _BodyState extends State<Body> {
   @override
   void initState() {
     super.initState();
-    _loading = true;
-    getProducts(0);
+    _fetchData();
   }
 
-  void getProducts(int selectedCategory) async {
+  Future _fetchData() async {
+    _loading = true;
+
+    final result = await Future.wait([
+      getCategories(),
+      getProducts(0),
+    ]);
+
+    if (result[0] && result[1]) {
+      setState(() {
+        _loading = false;
+      });
+    }
+  }
+
+  Future<bool> getProducts(int selectedCategory) async {
     await getProductsByCategoryId(selectedCategory);
-    setState(() {
-      _loading = false;
-    });
+    return true;
   }
 
   callback(newAbc) {
     setState(() {
-      //selectedCategory = newAbc;
       _loading = true;
-      getProducts(newAbc);
+      final xa = getProducts(newAbc);
+
+      setState(() {
+        _loading = false;
+      });
     });
   }
 
@@ -55,10 +73,6 @@ class _BodyState extends State<Body> {
           _loading
               ? Center(
                   child: CircularProgressIndicator(),
-                  // child : SpinKitDoubleBounce(
-                  //         size: 100,
-                  //         color: Colors.white,
-                  //),
                 )
               : Expanded(
                   child: Padding(
@@ -87,5 +101,13 @@ class _BodyState extends State<Body> {
                   ),
                 )
         ]);
+  }
+
+  Future<bool> getCategories() async {
+    List<ProductType> data = await ProductType().getCategories();
+    data.forEach((element) {
+      categories.add(element.productCat);
+    });
+    return true;
   }
 }

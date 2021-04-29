@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/models/productType.dart';
 import '../../../constants.dart';
+import 'body.dart';
 
-// We need statefull widget for our categories
+// We need stateful widget for our categories
 
 // ignore: must_be_immutable
 class Categories extends StatefulWidget {
   Categories(this.callback);
-
   Function(int) callback;
 
   @override
@@ -15,7 +15,7 @@ class Categories extends StatefulWidget {
 }
 
 class _CategoriesState extends State<Categories> {
-  List<String> categories = [];
+  //List<String> categories = [];
   // By default our first item will be selected
   int selectedIndex = 0;
 
@@ -23,8 +23,18 @@ class _CategoriesState extends State<Categories> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getCategories();
+ //   _fetchData();
   }
+
+  // Future _fetchData () async{
+  //   List<ProductType> data = await ProductType().getCategories();
+  //   data.forEach((element) {
+  //     categories.add(element.productCat);
+  //   });
+  //   setState(() {
+  //     categories;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -77,10 +87,10 @@ class _CategoriesState extends State<Categories> {
     );
   }
 
-  void getCategories() async {
-    List<ProductType> data = await ProductType().getCategories();
-    data.forEach((element) {
-      categories.add(element.productCat);
-    });
-  }
+  // void getCategories() async {
+  //   List<ProductType> data = await ProductType().getCategories();
+  //   data.forEach((element) {
+  //     categories.add(element.productCat);
+  //   });
+  // }
 }
