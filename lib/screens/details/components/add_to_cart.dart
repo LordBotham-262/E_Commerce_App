@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shop_app/models/product.dart';
+import 'package:shop_app/services/cartAdder.dart';
 
 import '../../../constants.dart';
 
+// ignore: must_be_immutable
 class AddToCart extends StatelessWidget {
   const AddToCart({
-    Key key,
-    @required this.product,
-  }) : super(key: key);
+    @required this.product,@required this.noOfItems, numOfItems
+  });
 
   final Product product;
+  final int noOfItems;
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +45,10 @@ class AddToCart extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18)),
                 color: product.color,
-                onPressed: () {
-                  
+                onPressed: () async {
+                  final abc = await addItemtoCart(product.id,product.size,noOfItems);
+                  print(abc.statusCode);
+                  print(abc.body);
                 },
                 child: Text(
                   "Buy  Now".toUpperCase(),

@@ -43,15 +43,16 @@ class _BodyState extends State<Body> {
     return true;
   }
 
-  callback(newAbc) {
+  callback(newAbc) async {
     setState(() {
       _loading = true;
-      final xa = getProducts(newAbc);
-
+    });
+    final xa = await getProducts(newAbc);
+    if (xa) {
       setState(() {
         _loading = false;
       });
-    });
+    }
   }
 
   @override
@@ -70,10 +71,25 @@ class _BodyState extends State<Body> {
             ),
           ),
           Categories(callback),
-          _loading
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
+          (_loading && kConnectionError)
+               ? Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  MaterialBanner(
+                    content: const Text('Database Connection Error'),
+                    leading: CircleAvatar(child: Icon(Icons.delete)),
+                    actions: [
+                      TextButton(
+                        child: const Text('Contact'),
+                        onPressed: () { },
+                      ),
+                    ],
+                  )
+                ],
+              )
               : Expanded(
                   child: Padding(
                     padding:
@@ -99,7 +115,8 @@ class _BodyState extends State<Body> {
                       ),
                     ),
                   ),
-                )
+                ),
+
         ]);
   }
 

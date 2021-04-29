@@ -4,10 +4,11 @@ const kTextColor = Color(0xFF535353);
 const kTextLightColor = Color(0xFFACACAC);
 
 const kDefaultPaddin = 20.0;
+bool kConnectionError = false;
 
 const KImagePath = "assets/images/";
-//const KServerPath = "http://192.168.2.204:3000/";
-const KServerPath = "https://patelshop.herokuapp.com/";
+const KServerPath = "http://192.168.2.204:3000/";
+//const KServerPath = "https://patelshop.herokuapp.com/";
 
 const kBottomContainerHeight = 60.0;
 const kActiveCardColour = Color(0xFF1D1E33);
