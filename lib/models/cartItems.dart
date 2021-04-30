@@ -1,6 +1,5 @@
 import 'package:shop_app/constants.dart';
 import 'package:shop_app/services/network_helper.dart';
-import 'product.dart';
 
 List<CartItems> cartItems = [];
 

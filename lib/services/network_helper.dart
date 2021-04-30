@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:shop_app/constants.dart';
 
@@ -6,15 +7,11 @@ import 'package:shop_app/constants.dart';
 Future<List> networkHelper(String url) async {
   List<dynamic> responseData = [];
   final http.Response response = await http.get(Uri.parse(url));
-  if(response.statusCode == 200 || response.statusCode == 201){
+  print(response.statusCode);
+  if (response.statusCode == 200 || response.statusCode == 201) {
     responseData = json.decode(response.body);
-    kConnectionError = false;
     return responseData;
-  }
-  else
-    {
+  } else {
     kConnectionError = true;
-    }
-
-
+  }
 }

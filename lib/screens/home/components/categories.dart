@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/models/productType.dart';
+
 import '../../../constants.dart';
 import 'body.dart';
 
@@ -8,6 +9,7 @@ import 'body.dart';
 // ignore: must_be_immutable
 class Categories extends StatefulWidget {
   Categories(this.callback);
+
   Function(int) callback;
 
   @override
@@ -23,7 +25,7 @@ class _CategoriesState extends State<Categories> {
   void initState() {
     // TODO: implement initState
     super.initState();
- //   _fetchData();
+    //   _fetchData();
   }
 
   // Future _fetchData () async{
@@ -87,10 +89,10 @@ class _CategoriesState extends State<Categories> {
     );
   }
 
-  // void getCategories() async {
-  //   List<ProductType> data = await ProductType().getCategories();
-  //   data.forEach((element) {
-  //     categories.add(element.productCat);
-  //   });
-  // }
+// void getCategories() async {
+//   List<ProductType> data = await ProductType().getCategories();
+//   data.forEach((element) {
+//     categories.add(element.productCat);
+//   });
+// }
 }

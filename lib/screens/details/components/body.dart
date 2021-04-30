@@ -1,28 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/constants.dart';
 import 'package:shop_app/models/product.dart';
+
 import 'add_to_cart.dart';
 import 'color_and_size.dart';
 import 'counter_with_fav_btn.dart';
 import 'description.dart';
 import 'product_title_with_image.dart';
 
-
-
 class Body extends StatefulWidget {
   final Product product;
-  Body({this.product});
+
+  const Body({Key key, this.product}) : super(key: key);
 
   @override
   _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
-  int numOfItems;
-  callback(newAbc) async {
-    setState(() {
-      numOfItems = newAbc;
-    });
+  int numOfItems = 1;
+
+  callback(newAbc) {
+    if (numOfItems != newAbc) {
+      setState(() {
+        numOfItems = newAbc;
+      });
+    }
   }
 
   @override
@@ -57,9 +60,9 @@ class _BodyState extends State<Body> {
                       SizedBox(height: kDefaultPaddin / 2),
                       Description(product: widget.product),
                       SizedBox(height: kDefaultPaddin / 2),
-                      CounterWithFavBtn(callback),
+                      CounterWithFavBtn(numOfItems, callback),
                       SizedBox(height: kDefaultPaddin / 2),
-                      AddToCart(product: widget.product,noOfItems: numOfItems)
+                      AddToCart(product: widget.product, noOfItems: numOfItems)
                     ],
                   ),
                 ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shop_app/constants.dart';
 import 'package:shop_app/models/product.dart';
 import 'package:shop_app/models/productType.dart';
 import 'package:shop_app/screens/details/details_screen.dart';
+
 import 'categories.dart';
 import 'item_card.dart';
 
@@ -71,25 +71,10 @@ class _BodyState extends State<Body> {
             ),
           ),
           Categories(callback),
-          (_loading && kConnectionError)
-               ? Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  MaterialBanner(
-                    content: const Text('Database Connection Error'),
-                    leading: CircleAvatar(child: Icon(Icons.delete)),
-                    actions: [
-                      TextButton(
-                        child: const Text('Contact'),
-                        onPressed: () { },
-                      ),
-                    ],
-                  )
-                ],
-              )
+          _loading
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
               : Expanded(
                   child: Padding(
                     padding:
@@ -116,7 +101,18 @@ class _BodyState extends State<Body> {
                     ),
                   ),
                 ),
-
+          kConnectionError
+              ? MaterialBanner(
+                  content: const Text('Database Connection Error'),
+                  leading: CircleAvatar(child: Icon(Icons.delete)),
+                  actions: [
+                    TextButton(
+                      child: const Text('Contact'),
+                      onPressed: () {},
+                    ),
+                  ],
+                )
+              : Container()
         ]);
   }
 

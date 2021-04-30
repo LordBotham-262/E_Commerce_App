@@ -6,14 +6,20 @@ import 'package:shop_app/services/cartAdder.dart';
 import '../../../constants.dart';
 
 // ignore: must_be_immutable
-class AddToCart extends StatelessWidget {
+class AddToCart extends StatefulWidget {
   const AddToCart({
-    @required this.product,@required this.noOfItems, numOfItems
+    @required this.product,
+    this.noOfItems,
   });
 
   final Product product;
   final int noOfItems;
 
+  @override
+  _AddToCartState createState() => _AddToCartState();
+}
+
+class _AddToCartState extends State<AddToCart> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -27,13 +33,13 @@ class AddToCart extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(18),
               border: Border.all(
-                color: product.color,
+                color: widget.product.color,
               ),
             ),
             child: IconButton(
               icon: SvgPicture.asset(
                 "assets/icons/add_to_cart.svg",
-                color: product.color,
+                color: widget.product.color,
               ),
               onPressed: () {},
             ),
@@ -44,9 +50,12 @@ class AddToCart extends StatelessWidget {
               child: FlatButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18)),
-                color: product.color,
+                color: widget.product.color,
                 onPressed: () async {
-                  final abc = await addItemtoCart(product.id,product.size,noOfItems);
+                  final abc = await addItemToCart(
+                      widget.product.id,
+                      widget.product.size,
+                      widget.noOfItems == null ? 1 : widget.noOfItems);
                   print(abc.statusCode);
                   print(abc.body);
                 },

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/models/cartItems.dart';
-import 'cartItemsCard.dart';
+
 import '../../../constants.dart';
+import 'cartItemsCard.dart';
 
 Expanded cartBuilder() {
   return Expanded(
     child: new ListView.builder(
-      padding: const EdgeInsets.symmetric(
-          horizontal: kDefaultPaddin),
+      padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
       itemCount: cartItems.length,
       itemBuilder: (BuildContext context, int index) {
         return Padding(
@@ -24,8 +24,7 @@ Expanded cartBuilder() {
                 child: CartItemCard(
                   title: cartItems[index].title,
                   price: cartItems[index].price,
-                  stockStatus:
-                  getStockStatus(cartItems[index].stock),
+                  stockStatus: getStockStatus(cartItems[index].stock),
                   cartCount: cartItems[index].quantity,
                 ),
               ),

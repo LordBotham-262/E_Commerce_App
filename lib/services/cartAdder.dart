@@ -1,15 +1,17 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 import '../constants.dart';
 
-Future<http.Response> addItemtoCart(int id, int size, int noOfItems) {
-  return http.post(Uri.parse(
-      KServerPath + 'cart/user_id/1'),
+Future<http.Response> addItemToCart(int id, int size, int noOfItems) {
+  return http.post(
+    Uri.parse(KServerPath + 'cart/user_id/1'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
-    body: requestBody,
+    body: json.encoder.convert(
+        CartItemList([CartItem(productId: id, size: 1, quantity: noOfItems)])),
   );
 }
 
@@ -19,24 +21,18 @@ class CartItemList {
   List<CartItem> cartItems;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-    'cartItems': cartItems,
-  };
+        'cartItems': cartItems,
+      };
 }
 
 class CartItem {
-  CartItem({this.productId, this.size,this.quantity});
+  CartItem({this.productId, this.size, this.quantity});
 
-  int productId, size , quantity;
+  int productId, size, quantity;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-      "product_id": productId,
-      "size": size,
-      "quantity": quantity
-  };
+        "product_id": productId,
+        "size": size,
+        "quantity": quantity
+      };
 }
-
-final CartItemList cartItemList =
-CartItemList(List<CartItem>.generate(2, (int index) {
-  return CartItem(productId: 3, size:1,quantity: 1 );
-}));
-final String requestBody = json.encoder.convert(cartItemList);

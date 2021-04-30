@@ -15,6 +15,7 @@ class CartItemCard extends StatefulWidget {
 
 class _CartItemCardState extends State<CartItemCard> {
   int numOfItems;
+
   callback(newAbc) async {
     setState(() {
       numOfItems = newAbc;
@@ -43,10 +44,9 @@ class _CartItemCardState extends State<CartItemCard> {
             ),
           ),
           const Padding(padding: EdgeInsets.symmetric(vertical: 3.0)),
-
           widget.stockStatus,
           const Padding(padding: EdgeInsets.symmetric(vertical: 3.0)),
-          CartCounter(widget.cartCount,callback),
+          CartCounter(widget.cartCount, callback),
         ],
       ),
     );

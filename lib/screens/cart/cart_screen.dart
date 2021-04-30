@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/constants.dart';
 import 'package:shop_app/models/cartItems.dart';
-import '../appBar.dart';
+import 'components/cartAppBar.dart';
 import 'components/cartBuilder.dart';
 
 class CartScreen extends StatefulWidget {
@@ -30,7 +30,7 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: buildAppBar(context),
+        appBar: cartAppBar(context),
         body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -47,12 +47,11 @@ class _CartScreenState extends State<CartScreen> {
               SizedBox(
                 height: 20,
               ),
-
-               _loading
-                    ? Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : cartBuilder(),
+              _loading
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : cartBuilder(),
               Container(
                 child: Center(
                   child: Text(

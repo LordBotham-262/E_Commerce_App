@@ -40,7 +40,7 @@ class ColorAndSize extends StatelessWidget {
               children: [
                 TextSpan(text: "Size\n"),
                 TextSpan(
-                  text: "${product.size} cm",
+                  text: product.size.toString(),
                   style: Theme.of(context)
                       .textTheme
                       .headline5
@@ -58,6 +58,7 @@ class ColorAndSize extends StatelessWidget {
 class ColorDot extends StatelessWidget {
   final Color color;
   final bool isSelected;
+
   const ColorDot({
     Key key,
     this.color,

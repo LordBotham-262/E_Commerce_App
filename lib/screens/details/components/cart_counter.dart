@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+
 import '../../../constants.dart';
 
 // ignore: must_be_immutable
 class CartCounter extends StatefulWidget {
   CartCounter(this.numOfItems, this.callback);
+
   Function(int) callback;
   int numOfItems;
 
@@ -22,7 +24,7 @@ class _CartCounterState extends State<CartCounter> {
             if (widget.numOfItems > 1) {
               setState(() {
                 widget.numOfItems--;
-                //widget.callback(widget.numOfItems);
+                widget.callback(widget.numOfItems);
               });
             }
           },
@@ -40,7 +42,7 @@ class _CartCounterState extends State<CartCounter> {
             press: () {
               setState(() {
                 widget.numOfItems++;
-                //widget.callback(widget.numOfItems);
+                widget.callback(widget.numOfItems);
               });
             }),
       ],

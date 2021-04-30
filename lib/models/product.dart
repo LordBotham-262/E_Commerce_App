@@ -8,6 +8,7 @@ class Product {
   final int price, size, id, type;
   final Color color;
   final String image, title, description;
+
   Product({
     this.id,
     this.image,
