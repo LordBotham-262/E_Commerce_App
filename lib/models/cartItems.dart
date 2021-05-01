@@ -30,7 +30,7 @@ Future<dynamic> getCartItemsByUserId(int id) async {
   List<dynamic> responseData = await networkHelper(url);
   responseData.forEach((json) {
     final CartItems data = CartItems(
-      id: json['id'],
+      id: json['cart_id'],
       productId: json['product_id'],
       userId: json['user_id'],
       size: json['size'],

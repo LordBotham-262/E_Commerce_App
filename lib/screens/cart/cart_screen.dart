@@ -14,23 +14,27 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _loading = true;
     getCartItems(1);
   }
 
-  void getCartItems(int i) async {
+  Future<bool> getCartItems(int i) async {
     await getCartItemsByUserId(1);
     setState(() {
       _loading = false;
     });
+    return true;
+  }
+
+  callback(newAbc) async{
+    final xa = await getCartItems(newAbc);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: cartAppBar(context),
+        appBar: cartAppBar(context,callback),
         body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -51,7 +55,7 @@ class _CartScreenState extends State<CartScreen> {
                   ? Center(
                       child: CircularProgressIndicator(),
                     )
-                  : cartBuilder(),
+                  : cartBuilder(callback),
               Container(
                 child: Center(
                   child: Text(
@@ -62,7 +66,6 @@ class _CartScreenState extends State<CartScreen> {
                 color: kBottomContainerColour,
                 margin: EdgeInsets.only(top: 10.0),
                 padding: EdgeInsets.only(bottom: 20.0),
-                //width: double.infinity,
                 height: kBottomContainerHeight,
               ),
             ]));

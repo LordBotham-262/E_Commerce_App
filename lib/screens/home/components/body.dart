@@ -3,7 +3,6 @@ import 'package:shop_app/constants.dart';
 import 'package:shop_app/models/product.dart';
 import 'package:shop_app/models/productType.dart';
 import 'package:shop_app/screens/details/details_screen.dart';
-
 import 'categories.dart';
 import 'item_card.dart';
 

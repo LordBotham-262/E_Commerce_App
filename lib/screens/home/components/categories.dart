@@ -9,7 +9,6 @@ import 'body.dart';
 // ignore: must_be_immutable
 class Categories extends StatefulWidget {
   Categories(this.callback);
-
   Function(int) callback;
 
   @override
@@ -17,7 +16,6 @@ class Categories extends StatefulWidget {
 }
 
 class _CategoriesState extends State<Categories> {
-  //List<String> categories = [];
   // By default our first item will be selected
   int selectedIndex = 0;
 
@@ -27,16 +25,6 @@ class _CategoriesState extends State<Categories> {
     super.initState();
     //   _fetchData();
   }
-
-  // Future _fetchData () async{
-  //   List<ProductType> data = await ProductType().getCategories();
-  //   data.forEach((element) {
-  //     categories.add(element.productCat);
-  //   });
-  //   setState(() {
-  //     categories;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -89,10 +77,4 @@ class _CategoriesState extends State<Categories> {
     );
   }
 
-// void getCategories() async {
-//   List<ProductType> data = await ProductType().getCategories();
-//   data.forEach((element) {
-//     categories.add(element.productCat);
-//   });
-// }
 }
