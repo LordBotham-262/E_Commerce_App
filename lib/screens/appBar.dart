@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../constants.dart';
 import 'cart/cart_screen.dart';
-import 'details/details_screen.dart';
 
-AppBar buildAppBar(BuildContext context) {
+AppBar buildAppBar(BuildContext context,int cartCounter) {
   return AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
@@ -37,7 +36,9 @@ AppBar buildAppBar(BuildContext context) {
             animationDuration: Duration(milliseconds: 300),
             animationType: BadgeAnimationType.slide,
             badgeContent: Text(
-              '3',
+              cartCounter.toString(),
+              // TODO: get the cartItemCount
+
               style: TextStyle(color: Colors.white),
             ),
             child: SvgPicture.asset(

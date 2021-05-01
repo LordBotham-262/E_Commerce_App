@@ -21,9 +21,7 @@ class _CategoriesState extends State<Categories> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    //   _fetchData();
   }
 
   @override

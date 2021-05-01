@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:shop_app/screens/details/components/cart_counter.dart';
 
 class CartItemCard extends StatefulWidget {
-  const CartItemCard(
+  CartItemCard(
       {this.title, this.price, this.stockStatus, this.cartCount});
 
   final String title;
   final Text stockStatus;
-  final int price, cartCount;
+  int price, cartCount;
 
   @override
   _CartItemCardState createState() => _CartItemCardState();
 }
 
 class _CartItemCardState extends State<CartItemCard> {
-  int numOfItems;
+  // int cartCount;
 
   callback(newAbc) async {
     setState(() {
-      numOfItems = newAbc;
+      this.widget.cartCount = newAbc;
     });
   }
 
@@ -46,7 +46,7 @@ class _CartItemCardState extends State<CartItemCard> {
           const Padding(padding: EdgeInsets.symmetric(vertical: 3.0)),
           widget.stockStatus,
           const Padding(padding: EdgeInsets.symmetric(vertical: 3.0)),
-          CartCounter(widget.cartCount, callback),
+          CartCounter(this.widget.cartCount, callback),
         ],
       ),
     );

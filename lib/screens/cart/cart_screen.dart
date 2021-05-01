@@ -28,7 +28,7 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   callback(newAbc) async{
-    final xa = await getCartItems(newAbc);
+    getCartItems(newAbc);
   }
 
   @override
@@ -55,7 +55,7 @@ class _CartScreenState extends State<CartScreen> {
                   ? Center(
                       child: CircularProgressIndicator(),
                     )
-                  : cartBuilder(callback),
+                  : CartBuilder(callback),
               Container(
                 child: Center(
                   child: Text(

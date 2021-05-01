@@ -4,15 +4,16 @@ import 'package:shop_app/services/cartItemDeleter.dart';
 import '../../../constants.dart';
 import 'cartItemsCard.dart';
 
-class cartBuilder extends StatefulWidget {
-  cartBuilder(this.callback);
+// ignore: must_be_immutable
+class CartBuilder extends StatefulWidget {
+  CartBuilder(this.callback);
   Function(int) callback;
 
   @override
-  _cartBuilderState createState() => _cartBuilderState();
+  _CartBuilderState createState() => _CartBuilderState();
 }
 
-class _cartBuilderState extends State<cartBuilder> {
+class _CartBuilderState extends State<CartBuilder> {
   @override
   Widget build(BuildContext context) {
     return Expanded(

@@ -26,6 +26,7 @@ class CartItems {
 
 Future<dynamic> getCartItemsByUserId(int id) async {
   cartItems.clear();
+  int noOfCartItems = 0;
   String url = KServerPath + "cart/user_id/" + id.toString();
   List<dynamic> responseData = await networkHelper(url);
   responseData.forEach((json) {
@@ -41,5 +42,7 @@ Future<dynamic> getCartItemsByUserId(int id) async {
       stock: json['stock'],
     );
     cartItems.add(data);
+    noOfCartItems = data.quantity + noOfCartItems;
   });
+  return noOfCartItems;
 }
