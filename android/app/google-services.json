@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "565962958472",
+    "firebase_url": "https://patelshop-4ee2d-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "patelshop-4ee2d",
+    "storage_bucket": "patelshop-4ee2d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:565962958472:android:dfd572bad7ea1508f7e13d",
+        "android_client_info": {
+          "package_name": "com.patelCo.shop_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "565962958472-8khrjj86cs52il4kllmqpjgd6hie25mi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnMlWcEk3mLBTCTrG4hOC5OoQLxP68yGw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "565962958472-8khrjj86cs52il4kllmqpjgd6hie25mi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
