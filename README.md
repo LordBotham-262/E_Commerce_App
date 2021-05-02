@@ -5,7 +5,8 @@
     - [x] Add items to CartList
     - [x] Delete items from CartList
     - [ ] Update the value of shopping Cart badge in Appbar
-    - [ ] xx
+    - [ ] Login page for the user
+    - [ ] Store tjhe login info in local file
 
 ## Installation
     
