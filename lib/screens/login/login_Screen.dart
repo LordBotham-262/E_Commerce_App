@@ -5,7 +5,7 @@ import 'package:shop_app/services/auth.dart';
 import '../appBar.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({this.auth,this.onSignedIn});
+  LoginScreen({this.auth, this.onSignedIn});
   final BaseAuth auth;
   final VoidCallback onSignedIn;
 
@@ -35,11 +35,14 @@ class _LoginScreenState extends State<LoginScreen> {
   void validateAndSubmit() async {
     if (validateAndSave()) {
       try {
+        print('validated');
         if (_formType == FormType.login) {
-          String userId = await widget.auth.signInWithEmailAndPassword(_email, _password);
+          String userId =
+              await widget.auth.signInWithEmailAndPassword(_email, _password);
           print('Signed in : ($userId)');
         } else {
-          String userId = await widget.auth.createUserWithEmailAndPassword(_email, _password);
+          String userId = await widget.auth
+              .createUserWithEmailAndPassword(_email, _password);
           print('Created User : ($userId)');
         }
         widget.onSignedIn();
@@ -66,68 +69,184 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(context, 0),
-      body: Container(
-        padding: EdgeInsets.all(16),
-        child: Form(
-          key: formKey,
-          child: Column(
-            children: buildInputs() + buildSubmitButtons(),
-          ),
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 5,
+        leading: IconButton(
+          icon: Icon(Icons.adb, color: Colors.black),
+          onPressed: () {},
+          iconSize: 40,
+        ),
+        actions: [
+          Icon(
+            Icons.arrow_back_ios,
+            color: Colors.pink,
+          )
+        ],
+      ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 40.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 100),
+              child: Row(
+                children: [
+                  Text(
+                    'Hey',
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontFamily: 'Merriweather',
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+            _formType == FormType.login ? messageBuilder('Login Now.') :messageBuilder('Register Now.'),
+            _formType == FormType.login ? navigationBuilder('If you are new / ','Create New',moveToRegister) : navigationBuilder('Already have an account / ','Login Page',moveToLogin) ,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 30),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    Card(
+                      color: Colors.white,
+                      child: ListTile(
+                        title: TextFormField(
+                          cursorHeight: 30,
+                          decoration: InputDecoration(
+                              labelText: "Email",
+                              isCollapsed: true,
+                              border: InputBorder.none,
+                              labelStyle: TextStyle(
+                                  fontFamily: 'SourceSansPro',
+                                  fontWeight: FontWeight.w300),
+                              hasFloatingPlaceholder: false),
+                          validator: (value) =>
+                              value.isEmpty ? 'Email can\'t be empty' : null,
+                          onSaved: (value) => _email = value,
+                        ),
+                      ),
+                    ),
+                    Card(
+                      color: Colors.white,
+                      child: ListTile(
+                        title: TextFormField(
+                          decoration: InputDecoration(
+                              labelText: "Password",
+                              border: InputBorder.none,
+                              isCollapsed: true,
+                              labelStyle: TextStyle(
+                                  fontFamily: 'SourceSansPro',
+                                  fontWeight: FontWeight.w300),
+                              hasFloatingPlaceholder: false),
+                          validator: (value) =>
+                              value.isEmpty ? 'Password can\'t be empty' : null,
+                          obscureText: true,
+                          onSaved: (value) => _password = value,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            _formType == FormType.login
+                ? Row(children: [
+                    Text(
+                      'Forgot Password? / ',
+                      style: TextStyle(
+                          color: Colors.black26,
+                          fontSize: 15,
+                          fontFamily: 'RobotoSlab',
+                          fontWeight: FontWeight.w100),
+                    ),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Text(
+                        'Reset',
+                        style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 16,
+                            fontFamily: 'RobotoSlab',
+                            fontWeight: FontWeight.w200),
+                      ),
+                    )
+                  ])
+                : Container(),
+            SizedBox(height: 50),
+            Container(
+                color: Colors.pink,
+                height: 50,
+                child: _formType == FormType.login
+                    ? buildElevatedButton('Login')
+                    : buildElevatedButton('Create an Account')),
+          ],
         ),
       ),
     );
   }
 
-  List<Widget> buildInputs() {
-    return [
-      TextFormField(
-        decoration: InputDecoration(labelText: "Email"),
-        validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
-        onSaved: (value) => _email = value,
-      ),
-      TextFormField(
-        decoration: InputDecoration(labelText: 'Password'),
-        obscureText: true,
-        validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
-        onSaved: (value) => _password = value,
-      ),
-    ];
+  Row messageBuilder(text1) {
+    return Row(
+            children: [
+              Text(
+                text1,
+                style: TextStyle(
+                    fontSize: 30,
+                    fontFamily: 'Merriweather',
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          );
   }
 
-  List<Widget> buildSubmitButtons() {
-    if (_formType == FormType.login) {
-      return [
-        ElevatedButton(
-          onPressed: validateAndSubmit,
-          child: Text(
-            'Login',
-            style: TextStyle(fontSize: 20),
-          ),
-        ),
-        TextButton(
-            onPressed: moveToRegister,
-            child: Text(
-              'Create an account',
-              style: TextStyle(fontSize: 20),
-            ))
-      ];
-    } else {
-      return [
-        ElevatedButton(
-          onPressed: validateAndSubmit,
-          child: Text(
-            'Create an Account',
-            style: TextStyle(fontSize: 20),
-          ),
-        ),
-        TextButton(
-            onPressed: moveToLogin,
-            child: Text(
-              'Have an Account? Login',
-              style: TextStyle(fontSize: 20),
-            ))
-      ];
-    }
+  Padding navigationBuilder(String text1, String text2, Function navigationFunction) {
+    return Padding(
+            padding: const EdgeInsets.only(top: 30),
+            child: Row(
+              children: [
+                Text(
+                  text1,
+                  style: TextStyle(
+                      color: Colors.black26,
+                      fontSize: 15,
+                      fontFamily: 'RobotoSlab',
+                      fontWeight: FontWeight.w100),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    navigationFunction();
+                  },
+                  child: Text(
+                    text2,
+                    style: TextStyle(
+                        color: Colors.black54,
+                        fontSize: 16,
+                        fontFamily: 'RobotoSlab',
+                        fontWeight: FontWeight.w200),
+                  ),
+                )
+              ],
+            ),
+          );
+  }
+
+  // Widget buildSubmitButtons() {
+  //
+  // }
+
+  ElevatedButton buildElevatedButton(String text) {
+    return ElevatedButton(
+      onPressed: validateAndSubmit,
+      child: Text(text),
+      style: ElevatedButton.styleFrom(
+          primary: Colors.pinkAccent,
+          textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+    );
   }
 }

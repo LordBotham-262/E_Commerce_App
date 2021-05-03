@@ -13,7 +13,7 @@ class RootPage extends StatefulWidget {
   _RootPageState createState() => _RootPageState();
 }
 
-enum AuthStatus { notSignedIn, SignedIn}
+enum AuthStatus { notSignedIn, SignedIn }
 
 class _RootPageState extends State<RootPage> {
   AuthStatus authStatus = AuthStatus.notSignedIn;
@@ -23,7 +23,8 @@ class _RootPageState extends State<RootPage> {
 
     widget.auth.currentUser().then((userId) {
       setState(() {
-        //authStatus = userId == null ? AuthStatus.notSignedIn : AuthStatus.SignedIn;
+        authStatus =
+            userId == null ? AuthStatus.notSignedIn : AuthStatus.SignedIn;
       });
     });
   }

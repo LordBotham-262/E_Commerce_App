@@ -59,8 +59,27 @@ flutter:
   fonts:
     - family: Gujarati
       fonts:
-        - asset: assets/fonts/HindVadodara-Light.ttf
-        - asset: assets/fonts/HindVadodara-Medium.ttf
+        - asset: assets\fonts\HindVadodara\HindVadodara-Light.ttf
+        - asset: assets\fonts\HindVadodara\HindVadodara-Medium.ttf
+
+    - family: RobotoSlab
+      fonts:
+        - asset: assets\fonts\Roboto_Slab\RobotoSlab-Medium.ttf
+
+    - family: SourceSansPro
+      fonts:
+        - asset: assets\fonts\Source_Sans_Pro\SourceSansPro-Regular.ttf
+
+    - family: Pacifico
+      fonts:
+        - asset: assets\fonts\Pacifico\Pacifico-Regular.ttf
+
+    - family: Merriweather
+      fonts:
+        - asset: assets\fonts\Merriweather\Merriweather-Bold.ttf
+
+
+
 
   #
   # For details regarding fonts from package dependencies,

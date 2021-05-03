@@ -7,6 +7,8 @@
     - [ ] Update the value of shopping Cart badge in Appbar
     - [x] Login page for the user
     - [ ] Store the login info in local file
+    - [ ] Reset Password functionality missing
+
 
 ## Installation
     
