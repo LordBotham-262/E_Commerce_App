@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shop_app/models/product.dart';
+import 'package:shop_app/services/cartAdder.dart';
 
 import '../../../constants.dart';
 
-class AddToCart extends StatelessWidget {
+// ignore: must_be_immutable
+class AddToCart extends StatefulWidget {
   const AddToCart({
-    Key key,
     @required this.product,
-  }) : super(key: key);
+    this.noOfItems,
+  });
 
   final Product product;
+  final int noOfItems;
 
+  @override
+  _AddToCartState createState() => _AddToCartState();
+}
+
+class _AddToCartState extends State<AddToCart> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -25,13 +33,13 @@ class AddToCart extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(18),
               border: Border.all(
-                color: product.color,
+                color: widget.product.color,
               ),
             ),
             child: IconButton(
               icon: SvgPicture.asset(
                 "assets/icons/add_to_cart.svg",
-                color: product.color,
+                color: widget.product.color,
               ),
               onPressed: () {},
             ),
@@ -42,8 +50,15 @@ class AddToCart extends StatelessWidget {
               child: FlatButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18)),
-                color: product.color,
-                onPressed: () {},
+                color: widget.product.color,
+                onPressed: () async {
+                  final abc = await addItemToCart(
+                      widget.product.id,
+                      widget.product.size,
+                      widget.noOfItems == null ? 1 : widget.noOfItems);
+                  print(abc.statusCode);
+                  print(abc.body);
+                },
                 child: Text(
                   "Buy  Now".toUpperCase(),
                   style: TextStyle(

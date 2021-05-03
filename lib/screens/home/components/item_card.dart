@@ -6,6 +6,7 @@ import '../../../constants.dart';
 class ItemCard extends StatelessWidget {
   final Product product;
   final Function press;
+
   const ItemCard({
     Key key,
     this.product,

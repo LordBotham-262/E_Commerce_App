@@ -8,10 +8,26 @@ import 'counter_with_fav_btn.dart';
 import 'description.dart';
 import 'product_title_with_image.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   final Product product;
 
   const Body({Key key, this.product}) : super(key: key);
+
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  int numOfItems = 1;
+
+  callback(newAbc) {
+    if (numOfItems != newAbc) {
+      setState(() {
+        numOfItems = newAbc;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // It provide us total height and width
@@ -40,17 +56,17 @@ class Body extends StatelessWidget {
                   ),
                   child: Column(
                     children: <Widget>[
-                      ColorAndSize(product: product),
+                      ColorAndSize(product: widget.product),
                       SizedBox(height: kDefaultPaddin / 2),
-                      Description(product: product),
+                      Description(product: widget.product),
                       SizedBox(height: kDefaultPaddin / 2),
-                      CounterWithFavBtn(),
+                      CounterWithFavBtn(numOfItems, callback),
                       SizedBox(height: kDefaultPaddin / 2),
-                      AddToCart(product: product)
+                      AddToCart(product: widget.product, noOfItems: numOfItems)
                     ],
                   ),
                 ),
-                ProductTitleWithImage(product: product)
+                ProductTitleWithImage(product: widget.product)
               ],
             ),
           )
