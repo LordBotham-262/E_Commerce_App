@@ -90,28 +90,16 @@ class _BodyState extends State<Body> {
                         product: products[index],
                         press: () => Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => DetailsScreen(
-                              product: products[index],
-                            ),
-                          ),
+                          MaterialPageRoute(builder: (context) {
+                            return DetailsScreen(
+                                  product: products[index],
+                                );
+                          }),
                         ),
                       ),
                     ),
                   ),
-                ),
-          kConnectionError
-              ? MaterialBanner(
-                  content: const Text('Database Connection Error'),
-                  leading: CircleAvatar(child: Icon(Icons.delete)),
-                  actions: [
-                    TextButton(
-                      child: const Text('Contact'),
-                      onPressed: () {},
-                    ),
-                  ],
                 )
-              : Container()
         ]);
   }
 

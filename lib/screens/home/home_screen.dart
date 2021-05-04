@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/screens/home/components/body.dart';
-import 'package:shop_app/services/auth.dart';
+import 'package:shop_app/services/authProvider.dart';
 import '../appBar.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({this.auth,this.onSignedOut});
-  final BaseAuth auth;
+  HomeScreen({this.onSignedOut});
   final VoidCallback onSignedOut;
 
-  void _signOut() async{
-    try{
+  void _signOut(BuildContext context) async {
+    try {
+      var auth = AuthProvider.of(context).auth;
       await auth.signOut();
       onSignedOut();
-    }
-    catch (e) {
+    } catch (e) {
       print(e);
     }
   }
@@ -21,10 +20,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(context,0),
+      appBar: buildAppBar(context),
       body: Body(),
       floatingActionButton: FloatingActionButton(
-        onPressed: _signOut,
+        onPressed: () => _signOut(context)
       ),
     );
   }

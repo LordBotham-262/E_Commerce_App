@@ -74,5 +74,4 @@ class _CategoriesState extends State<Categories> {
       ),
     );
   }
-
 }

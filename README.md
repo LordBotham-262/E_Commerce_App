@@ -8,6 +8,8 @@
     - [x] Login page for the user
     - [ ] Store the login info in local file
     - [ ] Reset Password functionality missing
+    - [ ] Add new products to cart as well as categories
+
 
 
 ## Installation

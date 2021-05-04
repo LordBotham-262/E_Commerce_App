@@ -1,12 +1,13 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shop_app/services/auth.dart';
-import '../appBar.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:shop_app/services/authProvider.dart';
+import 'components/loginAppBar.dart';
+import 'components/elevatedButton.dart';
+import 'components/messageBuilder.dart';
+import 'components/navigationBuilder.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({this.auth, this.onSignedIn});
-  final BaseAuth auth;
+  LoginScreen({this.onSignedIn});
   final VoidCallback onSignedIn;
 
   @override
@@ -17,6 +18,7 @@ enum FormType { login, register }
 
 class _LoginScreenState extends State<LoginScreen> {
   final formKey = new GlobalKey<FormState>();
+  bool _isLoading = false;
 
   String _email;
   String _password;
@@ -28,20 +30,26 @@ class _LoginScreenState extends State<LoginScreen> {
       form.save();
       return true;
     } else {
+      setState(() {
+        _isLoading = false;
+      });
       return false;
     }
   }
 
   void validateAndSubmit() async {
+    setState(() {
+      _isLoading = true;
+    });
     if (validateAndSave()) {
       try {
-        print('validated');
+        var auth = AuthProvider.of(context).auth;
         if (_formType == FormType.login) {
           String userId =
-              await widget.auth.signInWithEmailAndPassword(_email, _password);
+              await auth.signInWithEmailAndPassword(_email, _password);
           print('Signed in : ($userId)');
         } else {
-          String userId = await widget.auth
+          String userId = await auth
               .createUserWithEmailAndPassword(_email, _password);
           print('Created User : ($userId)');
         }
@@ -70,183 +78,109 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 5,
-        leading: IconButton(
-          icon: Icon(Icons.adb, color: Colors.black),
-          onPressed: () {},
-          iconSize: 40,
-        ),
-        actions: [
-          Icon(
-            Icons.arrow_back_ios,
-            color: Colors.pink,
-          )
-        ],
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 40.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 100),
-              child: Row(
-                children: [
-                  Text(
-                    'Hey',
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontFamily: 'Merriweather',
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-            _formType == FormType.login ? messageBuilder('Login Now.') :messageBuilder('Register Now.'),
-            _formType == FormType.login ? navigationBuilder('If you are new / ','Create New',moveToRegister) : navigationBuilder('Already have an account / ','Login Page',moveToLogin) ,
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 30),
-              child: Form(
-                key: formKey,
-                child: Column(
+      appBar: buildLoginAppBar(),
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 40.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 100),
+                child: Row(
                   children: [
-                    Card(
-                      color: Colors.white,
-                      child: ListTile(
-                        title: TextFormField(
-                          cursorHeight: 30,
-                          decoration: InputDecoration(
-                              labelText: "Email",
-                              isCollapsed: true,
-                              border: InputBorder.none,
-                              labelStyle: TextStyle(
-                                  fontFamily: 'SourceSansPro',
-                                  fontWeight: FontWeight.w300),
-                              hasFloatingPlaceholder: false),
-                          validator: (value) =>
-                              value.isEmpty ? 'Email can\'t be empty' : null,
-                          onSaved: (value) => _email = value,
-                        ),
-                      ),
-                    ),
-                    Card(
-                      color: Colors.white,
-                      child: ListTile(
-                        title: TextFormField(
-                          decoration: InputDecoration(
-                              labelText: "Password",
-                              border: InputBorder.none,
-                              isCollapsed: true,
-                              labelStyle: TextStyle(
-                                  fontFamily: 'SourceSansPro',
-                                  fontWeight: FontWeight.w300),
-                              hasFloatingPlaceholder: false),
-                          validator: (value) =>
-                              value.isEmpty ? 'Password can\'t be empty' : null,
-                          obscureText: true,
-                          onSaved: (value) => _password = value,
-                        ),
-                      ),
+                    Text(
+                      'Hey',
+                      style: GoogleFonts.zeyada(
+                          fontSize: 30, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
               ),
-            ),
-            _formType == FormType.login
-                ? Row(children: [
-                    Text(
-                      'Forgot Password? / ',
-                      style: TextStyle(
+              _formType == FormType.login
+                  ? messageBuilder('Login Now.')
+                  : messageBuilder('Register Now.'),
+              _formType == FormType.login
+                  ? navigationBuilder(
+                      'If you are new / ', 'Create New', moveToRegister)
+                  : navigationBuilder(
+                      'Already have an account / ', 'Login Page', moveToLogin),
+              formBuilder(),
+              _formType == FormType.login
+                  ? Row(children: [
+                      Text(
+                        'Forgot Password? / ',
+                        style: TextStyle(
                           color: Colors.black26,
                           fontSize: 15,
-                          fontFamily: 'RobotoSlab',
-                          fontWeight: FontWeight.w100),
-                    ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Text(
-                        'Reset',
-                        style: TextStyle(
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Text(
+                          'Reset',
+                          style: TextStyle(
                             color: Colors.black54,
                             fontSize: 16,
-                            fontFamily: 'RobotoSlab',
-                            fontWeight: FontWeight.w200),
-                      ),
-                    )
-                  ])
-                : Container(),
-            SizedBox(height: 50),
-            Container(
-                color: Colors.pink,
+                          ),
+                        ),
+                      )
+                    ])
+                  : SizedBox(
+                      height: 24,
+                    ),
+              SizedBox(
                 height: 50,
-                child: _formType == FormType.login
-                    ? buildElevatedButton('Login')
-                    : buildElevatedButton('Create an Account')),
-          ],
+              ),
+              Container(
+                  height: 50,
+                  child: _formType == FormType.login
+                      ? buildElevatedButton(
+                          'Login', Colors.blueAccent, validateAndSubmit,_isLoading)
+                      : buildElevatedButton('Create an Account',
+                          Colors.blueAccent, validateAndSubmit,_isLoading)),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Row messageBuilder(text1) {
-    return Row(
-            children: [
-              Text(
-                text1,
-                style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: 'Merriweather',
-                    fontWeight: FontWeight.bold),
-              ),
-            ],
-          );
-  }
-
-  Padding navigationBuilder(String text1, String text2, Function navigationFunction) {
+  Padding formBuilder() {
     return Padding(
-            padding: const EdgeInsets.only(top: 30),
-            child: Row(
-              children: [
-                Text(
-                  text1,
-                  style: TextStyle(
-                      color: Colors.black26,
-                      fontSize: 15,
-                      fontFamily: 'RobotoSlab',
-                      fontWeight: FontWeight.w100),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    navigationFunction();
-                  },
-                  child: Text(
-                    text2,
-                    style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: 16,
-                        fontFamily: 'RobotoSlab',
-                        fontWeight: FontWeight.w200),
+      padding: const EdgeInsets.symmetric(vertical: 30),
+      child: Form(
+        key: formKey,
+        child: Column(
+          children: [
+            Card(
+              child: ListTile(
+                title: TextFormField(
+                  decoration: InputDecoration(
+                    labelText: "Email",
                   ),
-                )
-              ],
+                  validator: (value) =>
+                      value.isEmpty ? 'Email can\'t be empty' : null,
+                  onSaved: (value) => _email = value,
+                ),
+              ),
             ),
-          );
-  }
-
-  // Widget buildSubmitButtons() {
-  //
-  // }
-
-  ElevatedButton buildElevatedButton(String text) {
-    return ElevatedButton(
-      onPressed: validateAndSubmit,
-      child: Text(text),
-      style: ElevatedButton.styleFrom(
-          primary: Colors.pinkAccent,
-          textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            Card(
+              child: ListTile(
+                title: TextFormField(
+                  decoration: InputDecoration(
+                    labelText: "Password",
+                  ),
+                  validator: (value) =>
+                      value.isEmpty ? 'Password can\'t be empty' : null,
+                  obscureText: true,
+                  onSaved: (value) => _password = value,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

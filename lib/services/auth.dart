@@ -28,13 +28,14 @@ class Auth extends BaseAuth {
     return user.user.uid;
   }
 
-  Future<String> currentUser() async{
+  Future<String> currentUser() async {
     await Firebase.initializeApp();
     User user = await FirebaseAuth.instance.currentUser;
     print(user);
     return user?.uid;
   }
-  Future<void> signOut() async{
+
+  Future<void> signOut() async {
     await Firebase.initializeApp();
     return await FirebaseAuth.instance.signOut();
   }

@@ -1,14 +1,8 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_app/screens/home/home_screen.dart';
-import 'package:shop_app/screens/login/login_Screen.dart';
-import 'package:shop_app/services/auth.dart';
+import 'package:shop_app/services/authProvider.dart';
 
 class RootPage extends StatefulWidget {
-  RootPage({this.auth});
-  final BaseAuth auth;
-
   @override
   _RootPageState createState() => _RootPageState();
 }
@@ -17,14 +11,15 @@ enum AuthStatus { notSignedIn, SignedIn }
 
 class _RootPageState extends State<RootPage> {
   AuthStatus authStatus = AuthStatus.notSignedIn;
-  @override
-  void initState() {
-    super.initState();
 
-    widget.auth.currentUser().then((userId) {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    var auth = AuthProvider.of(context).auth;
+    auth.currentUser().then((userId) {
       setState(() {
         authStatus =
-            userId == null ? AuthStatus.notSignedIn : AuthStatus.SignedIn;
+        userId == null ? AuthStatus.notSignedIn : AuthStatus.SignedIn;
       });
     });
   }
@@ -43,17 +38,16 @@ class _RootPageState extends State<RootPage> {
 
   @override
   Widget build(BuildContext context) {
-    switch (authStatus) {
-      case AuthStatus.notSignedIn:
-        return LoginScreen(
-          auth: widget.auth,
-          onSignedIn: _signedIn,
-        );
-      case AuthStatus.SignedIn:
+    // switch (authStatus) {
+    //   case AuthStatus.notSignedIn:
+    //     return LoginScreen(
+    //       onSignedIn: _signedIn,
+    //     );
+    // case AuthStatus.SignedIn:
         return HomeScreen(
-          auth: widget.auth,
-          onSignedOut: _signedOut,
+            onSignedOut: _signedOut,
         );
-    }
+   //}
   }
 }
+

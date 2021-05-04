@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_app/screens/details/components/cart_counter.dart';
 
 class CartItemCard extends StatefulWidget {
-  CartItemCard(
-      {this.title, this.price, this.stockStatus, this.cartCount});
+  CartItemCard({this.title, this.price, this.stockStatus, this.cartCount});
 
   final String title;
   final Text stockStatus;

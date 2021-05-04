@@ -7,13 +7,12 @@ import 'package:shop_app/constants.dart';
 Future<List> networkHelper(String url) async {
   List<dynamic> responseData = [];
 
-
   try {
-    final http.Response response = await http.get(Uri.parse(url)).timeout(
-        const Duration(seconds: 10));
+    final http.Response response =
+        await http.get(Uri.parse(url)).timeout(const Duration(seconds: 10));
     if (response.statusCode == 200 || response.statusCode == 201) {
       responseData = json.decode(response.body);
-    //  print(responseData);
+      //  print(responseData);
       return responseData;
     }
   } on TimeoutException catch (e) {

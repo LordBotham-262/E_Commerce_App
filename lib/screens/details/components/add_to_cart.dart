@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_app/models/product.dart';
 import 'package:shop_app/services/cartAdder.dart';
-
+import 'package:shop_app/services/cartCounter.dart';
 import '../../../constants.dart';
 
 // ignore: must_be_immutable
@@ -20,8 +21,10 @@ class AddToCart extends StatefulWidget {
 }
 
 class _AddToCartState extends State<AddToCart> {
+
   @override
   Widget build(BuildContext context) {
+    final cartCounter = Provider.of<CartCounter>(context,listen: false);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: kDefaultPaddin),
       child: Row(
@@ -52,12 +55,11 @@ class _AddToCartState extends State<AddToCart> {
                     borderRadius: BorderRadius.circular(18)),
                 color: widget.product.color,
                 onPressed: () async {
-                  final abc = await addItemToCart(
+                  final cartCount = await addItemToCart(
                       widget.product.id,
                       widget.product.size,
                       widget.noOfItems == null ? 1 : widget.noOfItems);
-                  print(abc.statusCode);
-                  print(abc.body);
+                    cartCounter.updateCartCount(cartCount);
                 },
                 child: Text(
                   "Buy  Now".toUpperCase(),

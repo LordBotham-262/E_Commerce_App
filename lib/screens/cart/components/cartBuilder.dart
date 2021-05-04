@@ -18,8 +18,7 @@ class _CartBuilderState extends State<CartBuilder> {
   Widget build(BuildContext context) {
     return Expanded(
       child: new ListView.builder(
-        padding: const EdgeInsets.symmetric(
-            horizontal: kDefaultPaddin),
+        padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
         itemCount: cartItems.length,
         itemBuilder: (BuildContext context, int index) {
           return Padding(
@@ -36,8 +35,7 @@ class _CartBuilderState extends State<CartBuilder> {
                   child: CartItemCard(
                     title: cartItems[index].title,
                     price: cartItems[index].price,
-                    stockStatus:
-                    getStockStatus(cartItems[index].stock),
+                    stockStatus: getStockStatus(cartItems[index].stock),
                     cartCount: cartItems[index].quantity,
                   ),
                 ),
@@ -48,9 +46,9 @@ class _CartBuilderState extends State<CartBuilder> {
                     color: kTextColor,
                     size: 20.0,
                   ),
-                  onPressed: () async{
+                  onPressed: () async {
                     final status = await deleteCart(1, cartItems[index].id);
-                    if(status.statusCode == 200){
+                    if (status.statusCode == 200) {
                       widget.callback(1);
                     }
                   },

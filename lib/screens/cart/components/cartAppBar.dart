@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shop_app/services/cartItemDeleter.dart';
 import '../../../constants.dart';
 
-AppBar cartAppBar (BuildContext context,Function(int) callback) {
+AppBar cartAppBar(BuildContext context, Function(int) callback) {
   return AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
@@ -28,14 +28,13 @@ AppBar cartAppBar (BuildContext context,Function(int) callback) {
             // By default our  icon color is white
             color: kTextColor,
           ),
-          onPressed: () async{
-            final status = await deleteCart(1,0);
-            if(status.statusCode == 200){
+          onPressed: () async {
+            final status = await deleteCart(1, 0);
+            if (status.statusCode == 200) {
               callback(1);
             }
           },
         ),
         SizedBox(width: kDefaultPaddin / 2)
-      ]
-  );
+      ]);
 }

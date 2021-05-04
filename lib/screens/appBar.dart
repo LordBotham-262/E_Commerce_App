@@ -1,13 +1,15 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import '../constants.dart';
 import 'cart/cart_screen.dart';
+import '../services/cartCounter.dart';
 
-AppBar buildAppBar(BuildContext context,int cartCounter) {
+
+AppBar buildAppBar(BuildContext context) {
   return AppBar(
-      backgroundColor: Colors.white,
-      elevation: 0,
+      elevation: 5,
       leading: IconButton(
         icon: SvgPicture.asset("assets/icons/back.svg"),
         onPressed: () {
@@ -35,11 +37,15 @@ AppBar buildAppBar(BuildContext context,int cartCounter) {
             position: BadgePosition.topEnd(top: 0, end: -10),
             animationDuration: Duration(milliseconds: 300),
             animationType: BadgeAnimationType.slide,
-            badgeContent: Text(
-              cartCounter.toString(),
-              // TODO: get the cartItemCount
+            badgeContent:
+            Consumer<CartCounter>(
+              builder : (_,counter,__) =>
+                  Text(
+                '${counter.value}',
+                // TODO: get the cartItemCount
 
-              style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white),
+              ),
             ),
             child: SvgPicture.asset(
               "assets/icons/cart.svg",

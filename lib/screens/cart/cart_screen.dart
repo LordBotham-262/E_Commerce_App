@@ -27,14 +27,14 @@ class _CartScreenState extends State<CartScreen> {
     return true;
   }
 
-  callback(newAbc) async{
+  callback(newAbc) async {
     getCartItems(newAbc);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: cartAppBar(context,callback),
+        appBar: cartAppBar(context, callback),
         body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
