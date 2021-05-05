@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/constants.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_app/basicFiles/constants.dart';
 import 'package:shop_app/models/cartItems.dart';
+import 'package:shop_app/services/cartServices/cartCounter.dart';
+
 import 'components/cartAppBar.dart';
 import 'components/cartBuilder.dart';
 
 class CartScreen extends StatefulWidget {
+  static String routeName = "/cart";
+
   @override
   _CartScreenState createState() => _CartScreenState();
 }
@@ -27,7 +32,7 @@ class _CartScreenState extends State<CartScreen> {
     return true;
   }
 
-  updateCart(int userId){
+  updateCart(int userId) {
     setState(() {
       _loading = true;
     });
@@ -56,21 +61,21 @@ class _CartScreenState extends State<CartScreen> {
               ),
               Expanded(
                 child: Stack(
-                      children: [
-                        Visibility(
-                          visible: _loading ? false : true,
-                          child: CartBuilder(updateCart),
-                        ),
-                        Visibility(
-                          visible: _loading,
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              backgroundColor: Colors.orangeAccent,
-                            ),
-                          ),
-                        ),
-                      ],
+                  children: [
+                    Visibility(
+                      visible: _loading ? false : true,
+                      child: CartBuilder(updateCart),
                     ),
+                    Visibility(
+                      visible: _loading,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          backgroundColor: Colors.orangeAccent,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Container(
                 alignment: Alignment.bottomLeft,

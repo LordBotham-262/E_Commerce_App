@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:shop_app/constants.dart';
+import 'package:shop_app/basicFiles/constants.dart';
 
 // ignore: missing_return
 Future<List> networkHelper(String url) async {

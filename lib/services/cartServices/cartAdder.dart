@@ -1,17 +1,15 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
+import '../../basicFiles/constants.dart';
 
-import '../constants.dart';
-
-Future<int> addItemToCart(int id, int size, int noOfItems) async {
+Future<int> addItemToCart(int userId, int productId, int size, int noOfItems) async {
   final response = await http.post(
-    Uri.parse(KServerPath + 'cart/user_id/1'),
+    Uri.parse(KServerPath + 'cart/user_id/'+ userId.toString()),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: json.encoder.convert(
-        CartItemList([CartItem(productId: id, size: 1, quantity: noOfItems)])),
+        CartItemList([CartItem(productId: productId, size: 1, quantity: noOfItems)])),
   );
   if (response.statusCode == 201) {
     var cartCount = 0;

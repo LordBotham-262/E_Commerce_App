@@ -2,9 +2,10 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import '../constants.dart';
+import 'package:shop_app/screens/userInfo/userInfo.dart';
+import 'package:shop_app/services/cartServices/cartCounter.dart';
+import '../basicFiles/constants.dart';
 import 'cart/cart_screen.dart';
-import '../services/cartCounter.dart';
 
 AppBar buildAppBar(BuildContext context) {
   return AppBar(
@@ -26,11 +27,7 @@ AppBar buildAppBar(BuildContext context) {
         ),
         GestureDetector(
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CartScreen(),
-                ));
+            Navigator.pushNamed(context, CartScreen.routeName);
           },
           child: Badge(
             position: BadgePosition.topEnd(top: 0, end: -10),
@@ -48,6 +45,14 @@ AppBar buildAppBar(BuildContext context) {
               color: kTextColor,
             ),
           ),
+        ),
+        SizedBox(width: kDefaultPaddin / 2),
+        IconButton(
+          icon: Icon(Icons.account_circle_outlined),
+
+          onPressed: () {
+            Navigator.pushNamed(context, UserInfo.routeName);
+          },
         ),
         SizedBox(width: kDefaultPaddin / 2)
       ]);

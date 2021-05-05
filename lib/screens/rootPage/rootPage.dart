@@ -4,6 +4,8 @@ import 'package:shop_app/screens/login/login_Screen.dart';
 import 'package:shop_app/services/authProvider.dart';
 
 class RootPage extends StatefulWidget {
+  static String routeName = '/root';
+
   @override
   _RootPageState createState() => _RootPageState();
 }
@@ -44,10 +46,10 @@ class _RootPageState extends State<RootPage> {
         return LoginScreen(
           onSignedIn: _signedIn,
         );
-    case AuthStatus.SignedIn:
-    return HomeScreen(
-      onSignedOut: _signedOut,
-    );
+      case AuthStatus.SignedIn:
+        return HomeScreen(
+          onSignedOut: _signedOut,
+        );
     }
   }
 }

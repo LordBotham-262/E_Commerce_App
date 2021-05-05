@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/screens/home/components/body.dart';
 import 'package:shop_app/services/authProvider.dart';
+
 import '../appBar.dart';
 
 class HomeScreen extends StatelessWidget {

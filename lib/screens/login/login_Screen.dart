@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_app/services/authProvider.dart';
-import 'components/loginAppBar.dart';
+
 import 'components/elevatedButton.dart';
+import 'components/loginAppBar.dart';
 import 'components/messageBuilder.dart';
 import 'components/navigationBuilder.dart';
 
@@ -47,11 +48,11 @@ class _LoginScreenState extends State<LoginScreen> {
         if (_formType == FormType.login) {
           String userId =
               await auth.signInWithEmailAndPassword(_email, _password);
-          print('Signed in : ($userId)');
+          //print('Signed in : ($userId)');
         } else {
           String userId =
               await auth.createUserWithEmailAndPassword(_email, _password);
-          print('Created User : ($userId)');
+          //print('Created User : ($userId)');
         }
         widget.onSignedIn();
       } catch (e) {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/services/cartCounter.dart';
-import 'package:shop_app/services/cartItemDeleter.dart';
+import 'package:shop_app/services/cartServices/cartCounter.dart';
+import 'package:shop_app/services/cartServices/cartItemDeleter.dart';
 
-import '../../../constants.dart';
+import '../../../basicFiles/constants.dart';
 
 AppBar cartAppBar(BuildContext context, Function(int) updateCart) {
   final cartCounter = Provider.of<CartCounter>(context, listen: false);

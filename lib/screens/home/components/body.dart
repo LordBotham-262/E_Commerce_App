@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/constants.dart';
+import 'package:shop_app/basicFiles/constants.dart';
 import 'package:shop_app/models/product.dart';
 import 'package:shop_app/models/productType.dart';
 import 'package:shop_app/screens/details/details_screen.dart';
@@ -88,19 +88,15 @@ class _BodyState extends State<Body> {
                       ),
                       itemBuilder: (context, index) => ItemCard(
                         product: products[index],
-                        press: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) {
-                            return DetailsScreen(
-                              product: products[index],
-                            );
-                          }),
-                        ),
+                        press: () => Navigator.pushNamed(
+                          context, DetailsScreen.routeName, arguments:DetailsPageArguments(product:products[index] )
                       ),
                     ),
                   ),
                 )
-        ]);
+        )
+    ]
+    );
   }
 
   Future<bool> getCategories() async {

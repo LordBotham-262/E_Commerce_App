@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/models/product.dart';
-import 'package:shop_app/services/cartAdder.dart';
-import 'package:shop_app/services/cartCounter.dart';
-import '../../../constants.dart';
+import 'package:shop_app/services/cartServices/cartAdder.dart';
+import 'package:shop_app/services/cartServices/cartCounter.dart';
+import '../../../basicFiles/constants.dart';
 
 // ignore: must_be_immutable
 class AddToCart extends StatefulWidget {
@@ -41,7 +40,7 @@ class _AddToCartState extends State<AddToCart> {
             ),
             child: IconButton(
               icon: Icon(Icons.bookmark),
-       //       icon: Icon(Icons.bookmark_border),
+              //       icon: Icon(Icons.bookmark_border),
               onPressed: () {},
             ),
           ),
@@ -63,6 +62,7 @@ class _AddToCartState extends State<AddToCart> {
                     _isLoading = true;
                   });
                   final cartCount = await addItemToCart(
+                      1,
                       widget.product.id,
                       widget.product.size,
                       widget.noOfItems == null ? 1 : widget.noOfItems);
