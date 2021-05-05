@@ -21,10 +21,10 @@ class AddToCart extends StatefulWidget {
 }
 
 class _AddToCartState extends State<AddToCart> {
-
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
-    final cartCounter = Provider.of<CartCounter>(context,listen: false);
+    final cartCounter = Provider.of<CartCounter>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: kDefaultPaddin),
       child: Row(
@@ -40,34 +40,57 @@ class _AddToCartState extends State<AddToCart> {
               ),
             ),
             child: IconButton(
-              icon: SvgPicture.asset(
-                "assets/icons/add_to_cart.svg",
-                color: widget.product.color,
-              ),
+              icon: Icon(Icons.bookmark),
+       //       icon: Icon(Icons.bookmark_border),
               onPressed: () {},
             ),
           ),
           Expanded(
-            child: SizedBox(
+            child: Container(
               height: 50,
-              child: FlatButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18)),
-                color: widget.product.color,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(widget.product.color),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                  ),
+                ),
                 onPressed: () async {
+                  setState(() {
+                    _isLoading = true;
+                  });
                   final cartCount = await addItemToCart(
                       widget.product.id,
                       widget.product.size,
                       widget.noOfItems == null ? 1 : widget.noOfItems);
-                    cartCounter.updateCartCount(cartCount);
+                  cartCounter.updateCartCount(cartCount);
+                  setState(() {
+                    _isLoading = false;
+                  });
                 },
-                child: Text(
-                  "Buy  Now".toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+                child: Stack(
+                  children: [
+                    Visibility(
+                      visible: _isLoading ? false : true,
+                      child: Text(
+                        "Buy  Now".toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: _isLoading,
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.orangeAccent,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

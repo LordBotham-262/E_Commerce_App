@@ -8,8 +8,7 @@ import 'package:shop_app/services/authProvider.dart';
 
 void main() {
   runApp(ChangeNotifierProvider<CartCounter>(
-      create: (context) => CartCounter(),
-      child: MyApp()));
+      create: (context) => CartCounter(), child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -26,13 +25,15 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.white,
           primaryColor: Colors.white,
           textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
-          accentTextTheme: GoogleFonts.sourceSansProTextTheme(Theme.of(context).accentTextTheme),
+          accentTextTheme: GoogleFonts.sourceSansProTextTheme(
+              Theme.of(context).accentTextTheme),
           inputDecorationTheme: InputDecorationTheme(
-                border: InputBorder.none,
-                isCollapsed: true,
-              contentPadding: new EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
-               // hasFloatingPlaceholder: false,
-                floatingLabelBehavior: FloatingLabelBehavior.auto),
+              border: InputBorder.none,
+              isCollapsed: true,
+              contentPadding:
+                  new EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
+              // hasFloatingPlaceholder: false,
+              floatingLabelBehavior: FloatingLabelBehavior.auto),
         ),
         home: RootPage(),
       ),

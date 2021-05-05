@@ -22,9 +22,8 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: buildAppBar(context),
       body: Body(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _signOut(context)
-      ),
+      floatingActionButton:
+          FloatingActionButton(onPressed: () => _signOut(context)),
     );
   }
 }

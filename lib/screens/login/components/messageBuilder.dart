@@ -6,8 +6,8 @@ Row messageBuilder(text1) {
     children: [
       Text(
         text1,
-        style: GoogleFonts.merriweather(
-            fontSize: 30, fontWeight: FontWeight.bold),
+        style:
+            GoogleFonts.merriweather(fontSize: 30, fontWeight: FontWeight.bold),
       ),
     ],
   );

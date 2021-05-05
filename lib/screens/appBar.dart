@@ -6,7 +6,6 @@ import '../constants.dart';
 import 'cart/cart_screen.dart';
 import '../services/cartCounter.dart';
 
-
 AppBar buildAppBar(BuildContext context) {
   return AppBar(
       elevation: 5,
@@ -37,13 +36,9 @@ AppBar buildAppBar(BuildContext context) {
             position: BadgePosition.topEnd(top: 0, end: -10),
             animationDuration: Duration(milliseconds: 300),
             animationType: BadgeAnimationType.slide,
-            badgeContent:
-            Consumer<CartCounter>(
-              builder : (_,counter,__) =>
-                  Text(
+            badgeContent: Consumer<CartCounter>(
+              builder: (_, counter, __) => Text(
                 '${counter.value}',
-                // TODO: get the cartItemCount
-
                 style: TextStyle(color: Colors.white),
               ),
             ),

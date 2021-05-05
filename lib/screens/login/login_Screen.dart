@@ -49,8 +49,8 @@ class _LoginScreenState extends State<LoginScreen> {
               await auth.signInWithEmailAndPassword(_email, _password);
           print('Signed in : ($userId)');
         } else {
-          String userId = await auth
-              .createUserWithEmailAndPassword(_email, _password);
+          String userId =
+              await auth.createUserWithEmailAndPassword(_email, _password);
           print('Created User : ($userId)');
         }
         widget.onSignedIn();
@@ -135,10 +135,10 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                   height: 50,
                   child: _formType == FormType.login
-                      ? buildElevatedButton(
-                          'Login', Colors.blueAccent, validateAndSubmit,_isLoading)
+                      ? buildElevatedButton('Login', Colors.blueAccent,
+                          validateAndSubmit, _isLoading)
                       : buildElevatedButton('Create an Account',
-                          Colors.blueAccent, validateAndSubmit,_isLoading)),
+                          Colors.blueAccent, validateAndSubmit, _isLoading)),
             ],
           ),
         ),

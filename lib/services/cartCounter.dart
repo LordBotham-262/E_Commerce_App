@@ -1,16 +1,14 @@
 import 'package:flutter/cupertino.dart';
 
-class CartCounter extends ChangeNotifier{
+class CartCounter extends ChangeNotifier {
   int value = 0;
-  void increment(){
+  void increment() {
     value++;
     notifyListeners();
   }
 
-  void updateCartCount(int count) async{
-//    int count = await getCartItemsCount();
+  void updateCartCount(int count) async {
     value = count ?? 0;
     notifyListeners();
   }
 }
-

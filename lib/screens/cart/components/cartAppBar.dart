@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_app/services/cartCounter.dart';
 import 'package:shop_app/services/cartItemDeleter.dart';
+
 import '../../../constants.dart';
 
-AppBar cartAppBar(BuildContext context, Function(int) callback) {
+AppBar cartAppBar(BuildContext context, Function(int) updateCart) {
+  final cartCounter = Provider.of<CartCounter>(context, listen: false);
   return AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
@@ -29,9 +33,10 @@ AppBar cartAppBar(BuildContext context, Function(int) callback) {
             color: kTextColor,
           ),
           onPressed: () async {
-            final status = await deleteCart(1, 0);
-            if (status.statusCode == 200) {
-              callback(1);
+            final cartCount = await deleteCart(1, 0);
+            if (cartCount >= 0) {
+              updateCart(1);
+              cartCounter.updateCartCount(cartCount);
             }
           },
         ),

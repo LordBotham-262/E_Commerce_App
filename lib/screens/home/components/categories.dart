@@ -59,6 +59,7 @@ class _CategoriesState extends State<Categories> {
             Text(
               categories[index].toString(),
               style: TextStyle(
+                fontSize: 12,
                 fontWeight: FontWeight.bold,
                 color: selectedIndex == index ? kTextColor : kTextLightColor,
               ),

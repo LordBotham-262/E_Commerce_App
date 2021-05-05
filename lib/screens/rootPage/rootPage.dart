@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/screens/home/home_screen.dart';
+import 'package:shop_app/screens/login/login_Screen.dart';
 import 'package:shop_app/services/authProvider.dart';
 
 class RootPage extends StatefulWidget {
@@ -19,7 +20,7 @@ class _RootPageState extends State<RootPage> {
     auth.currentUser().then((userId) {
       setState(() {
         authStatus =
-        userId == null ? AuthStatus.notSignedIn : AuthStatus.SignedIn;
+            userId == null ? AuthStatus.notSignedIn : AuthStatus.SignedIn;
       });
     });
   }
@@ -38,16 +39,15 @@ class _RootPageState extends State<RootPage> {
 
   @override
   Widget build(BuildContext context) {
-    // switch (authStatus) {
-    //   case AuthStatus.notSignedIn:
-    //     return LoginScreen(
-    //       onSignedIn: _signedIn,
-    //     );
-    // case AuthStatus.SignedIn:
-        return HomeScreen(
-            onSignedOut: _signedOut,
+    switch (authStatus) {
+      case AuthStatus.notSignedIn:
+        return LoginScreen(
+          onSignedIn: _signedIn,
         );
-   //}
+    case AuthStatus.SignedIn:
+    return HomeScreen(
+      onSignedOut: _signedOut,
+    );
+    }
   }
 }
-

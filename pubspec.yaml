@@ -57,6 +57,11 @@ flutter:
     - assets/images/
     - assets/icons/
 
-  #
+  fonts:
+    - family: Gujarati
+      fonts:
+        - asset: assets\fonts\HindVadodara\HindVadodara-Light.ttf
+        - asset: assets\fonts\HindVadodara\HindVadodara-Medium.ttf
+    #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

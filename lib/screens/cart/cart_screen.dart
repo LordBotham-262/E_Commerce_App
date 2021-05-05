@@ -19,7 +19,7 @@ class _CartScreenState extends State<CartScreen> {
     getCartItems(1);
   }
 
-  Future<bool> getCartItems(int i) async {
+  Future<bool> getCartItems(int userId) async {
     await getCartItemsByUserId(1);
     setState(() {
       _loading = false;
@@ -27,14 +27,17 @@ class _CartScreenState extends State<CartScreen> {
     return true;
   }
 
-  callback(newAbc) async {
-    getCartItems(newAbc);
+  updateCart(int userId){
+    setState(() {
+      _loading = true;
+    });
+    getCartItems(userId);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: cartAppBar(context, callback),
+        appBar: cartAppBar(context, updateCart),
         body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -51,12 +54,26 @@ class _CartScreenState extends State<CartScreen> {
               SizedBox(
                 height: 20,
               ),
-              _loading
-                  ? Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : CartBuilder(callback),
+              Expanded(
+                child: Stack(
+                      children: [
+                        Visibility(
+                          visible: _loading ? false : true,
+                          child: CartBuilder(updateCart),
+                        ),
+                        Visibility(
+                          visible: _loading,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              backgroundColor: Colors.orangeAccent,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+              ),
               Container(
+                alignment: Alignment.bottomLeft,
                 child: Center(
                   child: Text(
                     "CHECK OUT",

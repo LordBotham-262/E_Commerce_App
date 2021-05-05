@@ -26,7 +26,3 @@ const kLargeButtonTextStyle = TextStyle(
 const kBodyTextStyle = TextStyle(
   fontSize: 22.0,
 );
-
-
-
-
