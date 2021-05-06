@@ -4,7 +4,7 @@ import '../../basicFiles/constants.dart';
 
 Future<int> addItemToCart(String userId, int productId, int size, int noOfItems) async {
   final response = await http.post(
-    Uri.parse(KServerPath + 'cart/user_id/'+ userId),
+    Uri.parse(KServerPath + 'cart/user_id/' + userId),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },

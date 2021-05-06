@@ -26,6 +26,7 @@ class _CartScreenState extends State<CartScreen> {
         args = ModalRoute.of(context).settings.arguments;
         _loading = true;
       });
+      print(args.userInfo);
       getCartItems(args.userInfo);
     });
   }

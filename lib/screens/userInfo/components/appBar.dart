@@ -15,6 +15,7 @@ AppBar userPageAppBar(BuildContext context, String userInfo) {
           Navigator.pop(context);
         },
       ),
+      title: Text('Profile',style: TextStyle(fontWeight: FontWeight.w400),),
       actions: <Widget>[
         GestureDetector(
           onTap: () {

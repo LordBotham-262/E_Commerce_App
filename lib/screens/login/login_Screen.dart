@@ -8,6 +8,8 @@ import 'components/messageBuilder.dart';
 import 'components/navigationBuilder.dart';
 
 class LoginScreen extends StatefulWidget {
+  static String routeName = '/login';
+
   LoginScreen({this.onSignedIn});
   final VoidCallback onSignedIn;
 
