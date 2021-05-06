@@ -8,7 +8,7 @@ class FavouritesMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: buildAppBar(context),
+        appBar: buildAppBar(context,'1'),
         body: Text('favourites '),
       ),
     );

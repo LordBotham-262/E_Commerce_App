@@ -22,7 +22,6 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Patel Shop',
         theme: theme(),
-        // home: RootPage(),
          initialRoute: RootPage.routeName,
          routes: routes,
       ),

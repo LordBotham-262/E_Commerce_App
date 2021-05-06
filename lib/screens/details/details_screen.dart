@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/models/product.dart';
 import 'package:shop_app/screens/details/components/body.dart';
-
 import '../appBar.dart';
 
 class DetailsScreen extends StatelessWidget {
-  // final Product product;
-
   static String routeName = "/details";
-
-  //const DetailsScreen({Key key, this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +13,14 @@ class DetailsScreen extends StatelessWidget {
     return Scaffold(
       // each product have a color
       backgroundColor: args.product.color,
-      appBar: buildAppBar(context),
-      body: Body(product: args.product),
+      appBar: buildAppBar(context,args.userInfo),
+      body: Body(product: args.product,userInfo: args.userInfo),
     );
   }
 }
 
 class DetailsPageArguments {
   final Product product;
-  DetailsPageArguments({@required this.product});
+  final String userInfo;
+  DetailsPageArguments({@required this.product,@required this.userInfo});
 }

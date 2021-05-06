@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../basicFiles/constants.dart';
 
-Future<int> addItemToCart(int userId, int productId, int size, int noOfItems) async {
+Future<int> addItemToCart(String userId, int productId, int size, int noOfItems) async {
   final response = await http.post(
-    Uri.parse(KServerPath + 'cart/user_id/'+ userId.toString()),
+    Uri.parse(KServerPath + 'cart/user_id/'+ userId),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },

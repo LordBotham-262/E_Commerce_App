@@ -6,7 +6,7 @@ List<CartItems> cartItems = [];
 class CartItems {
   int id;
   int productId;
-  int userId;
+  String userId;
   int size;
   int quantity;
   final int price, stock;
@@ -24,10 +24,10 @@ class CartItems {
       this.stock});
 }
 
-Future<dynamic> getCartItemsByUserId(int id) async {
+Future<dynamic> getCartItemsByUserId(String id) async {
   cartItems.clear();
   int noOfCartItems = 0;
-  String url = KServerPath + "cart/user_id/" + id.toString();
+  String url = KServerPath + "cart/user_id/" + id;
   List<dynamic> responseData = await networkHelper(url);
   responseData.forEach((json) {
     final CartItems data = CartItems(

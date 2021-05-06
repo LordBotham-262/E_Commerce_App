@@ -9,6 +9,9 @@ import 'item_card.dart';
 List<String> categories = [];
 
 class Body extends StatefulWidget {
+  Body(@required this.userInfo);
+  String userInfo;
+
   @override
   _BodyState createState() => _BodyState();
 }
@@ -42,12 +45,12 @@ class _BodyState extends State<Body> {
     return true;
   }
 
-  callback(newAbc) async {
+  _selectedCategory(selectedCategory) async {
     setState(() {
       _loading = true;
     });
-    final xa = await getProducts(newAbc);
-    if (xa) {
+    final result = await getProducts(selectedCategory);
+    if (result) {
       setState(() {
         _loading = false;
       });
@@ -69,7 +72,7 @@ class _BodyState extends State<Body> {
                   .copyWith(fontWeight: FontWeight.bold),
             ),
           ),
-          Categories(callback),
+          Categories(_selectedCategory),
           _loading
               ? Center(
                   child: CircularProgressIndicator(),
@@ -89,7 +92,7 @@ class _BodyState extends State<Body> {
                       itemBuilder: (context, index) => ItemCard(
                         product: products[index],
                         press: () => Navigator.pushNamed(
-                          context, DetailsScreen.routeName, arguments:DetailsPageArguments(product:products[index] )
+                          context, DetailsScreen.routeName, arguments:DetailsPageArguments(product:products[index] ,userInfo: widget.userInfo)
                       ),
                     ),
                   ),

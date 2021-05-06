@@ -12,4 +12,3 @@ final Map<String, WidgetBuilder> routes = {
   UserInfo.routeName:(context) => UserInfo(),
   FavouritesMenu.routeName : (context) => FavouritesMenu(),
 };
-

@@ -15,34 +15,40 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  bool _loading;
+  bool _loading = true;
+  var args;
 
   @override
   void initState() {
     super.initState();
-    _loading = true;
-    getCartItems(1);
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        args = ModalRoute.of(context).settings.arguments;
+        _loading = true;
+      });
+      getCartItems(args.userInfo);
+    });
   }
 
-  Future<bool> getCartItems(int userId) async {
-    await getCartItemsByUserId(1);
+  Future<bool> getCartItems(String userId) async {
+    await getCartItemsByUserId(userId);
     setState(() {
       _loading = false;
     });
     return true;
   }
 
-  updateCart(int userId) {
+  _updateCart() {
     setState(() {
       _loading = true;
     });
-    getCartItems(userId);
+    getCartItems(args.userInfo);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: cartAppBar(context, updateCart),
+        appBar: cartAppBar(context, _updateCart,args.userInfo),
         body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -64,7 +70,7 @@ class _CartScreenState extends State<CartScreen> {
                   children: [
                     Visibility(
                       visible: _loading ? false : true,
-                      child: CartBuilder(updateCart),
+                      child: CartBuilder(args.userInfo,_updateCart),
                     ),
                     Visibility(
                       visible: _loading,
@@ -92,4 +98,9 @@ class _CartScreenState extends State<CartScreen> {
               ),
             ]));
   }
+}
+
+class CartScreenPageArguments {
+  final String userInfo;
+  CartScreenPageArguments({@required this.userInfo});
 }

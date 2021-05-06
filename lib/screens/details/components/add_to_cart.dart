@@ -9,9 +9,9 @@ import '../../../basicFiles/constants.dart';
 class AddToCart extends StatefulWidget {
   const AddToCart({
     @required this.product,
-    this.noOfItems,
+    this.noOfItems, this.userInfo,
   });
-
+  final String userInfo;
   final Product product;
   final int noOfItems;
 
@@ -62,7 +62,7 @@ class _AddToCartState extends State<AddToCart> {
                     _isLoading = true;
                   });
                   final cartCount = await addItemToCart(
-                      1,
+                      widget.userInfo,
                       widget.product.id,
                       widget.product.size,
                       widget.noOfItems == null ? 1 : widget.noOfItems);

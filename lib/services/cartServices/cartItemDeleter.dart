@@ -4,9 +4,9 @@ import 'package:http/http.dart' as http;
 
 import '../../basicFiles/constants.dart';
 
-Future<int> deleteCart(int userId, int cartId) async {
+Future<int> deleteCart(String userId, int cartId) async {
   final response = await http.delete(
-    Uri.parse(KServerPath + 'cart/user_id/1/cart_id/' + cartId.toString()),
+    Uri.parse(KServerPath + 'cart/user_id/'+userId+'/cart_id/' + cartId.toString()),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },

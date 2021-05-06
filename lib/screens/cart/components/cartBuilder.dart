@@ -8,8 +8,9 @@ import 'cartItemsCard.dart';
 
 // ignore: must_be_immutable
 class CartBuilder extends StatefulWidget {
-  CartBuilder(this.updateCart);
-  Function(int) updateCart;
+  CartBuilder(this.userInfo,this.updateCart);
+  Function() updateCart;
+  String userInfo;
 
   @override
   _CartBuilderState createState() => _CartBuilderState();
@@ -19,6 +20,7 @@ class _CartBuilderState extends State<CartBuilder> {
   @override
   Widget build(BuildContext context) {
     final cartCounter = Provider.of<CartCounter>(context, listen: false);
+
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
       itemCount: cartItems.length,
@@ -49,9 +51,9 @@ class _CartBuilderState extends State<CartBuilder> {
                   size: 20.0,
                 ),
                 onPressed: () async {
-                  final cartCount = await deleteCart(1, cartItems[index].id);
+                  final cartCount = await deleteCart(widget.userInfo, cartItems[index].id);
                   if (cartCount >= 0) {
-                    widget.updateCart(1);
+                    widget.updateCart();
                     cartCounter.updateCartCount(cartCount);
                   }
                 },
