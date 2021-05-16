@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
+import '../../../basicFiles/constants.dart';
 
 // ignore: must_be_immutable
 class CartCounter extends StatefulWidget {

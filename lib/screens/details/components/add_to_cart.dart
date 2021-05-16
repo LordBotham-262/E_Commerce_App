@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_app/models/product.dart';
-import 'package:shop_app/services/cartAdder.dart';
-
-import '../../../constants.dart';
+import 'package:shop_app/services/cartServices/cartAdder.dart';
+import 'package:shop_app/services/cartServices/cartCounter.dart';
+import '../../../basicFiles/constants.dart';
 
 // ignore: must_be_immutable
 class AddToCart extends StatefulWidget {
   const AddToCart({
     @required this.product,
-    this.noOfItems,
+    this.noOfItems, this.userInfo,
   });
-
+  final String userInfo;
   final Product product;
   final int noOfItems;
 
@@ -20,8 +20,10 @@ class AddToCart extends StatefulWidget {
 }
 
 class _AddToCartState extends State<AddToCart> {
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
+    final cartCounter = Provider.of<CartCounter>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: kDefaultPaddin),
       child: Row(
@@ -37,35 +39,58 @@ class _AddToCartState extends State<AddToCart> {
               ),
             ),
             child: IconButton(
-              icon: SvgPicture.asset(
-                "assets/icons/add_to_cart.svg",
-                color: widget.product.color,
-              ),
+              icon: Icon(Icons.bookmark),
+              //       icon: Icon(Icons.bookmark_border),
               onPressed: () {},
             ),
           ),
           Expanded(
-            child: SizedBox(
+            child: Container(
               height: 50,
-              child: FlatButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18)),
-                color: widget.product.color,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(widget.product.color),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                  ),
+                ),
                 onPressed: () async {
-                  final abc = await addItemToCart(
+                  setState(() {
+                    _isLoading = true;
+                  });
+                  final cartCount = await addItemToCart(
+                      widget.userInfo,
                       widget.product.id,
                       widget.product.size,
                       widget.noOfItems == null ? 1 : widget.noOfItems);
-                  print(abc.statusCode);
-                  print(abc.body);
+                  cartCounter.updateCartCount(cartCount);
+                  setState(() {
+                    _isLoading = false;
+                  });
                 },
-                child: Text(
-                  "Buy  Now".toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+                child: Stack(
+                  children: [
+                    Visibility(
+                      visible: _isLoading ? false : true,
+                      child: Text(
+                        "Buy  Now".toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: _isLoading,
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.orangeAccent,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

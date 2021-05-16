@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/constants.dart';
+import 'package:shop_app/basicFiles/constants.dart';
 import 'package:shop_app/models/product.dart';
 import 'package:shop_app/models/productType.dart';
 import 'package:shop_app/screens/details/details_screen.dart';
@@ -9,6 +9,9 @@ import 'item_card.dart';
 List<String> categories = [];
 
 class Body extends StatefulWidget {
+  Body(@required this.userInfo);
+  String userInfo;
+
   @override
   _BodyState createState() => _BodyState();
 }
@@ -42,12 +45,12 @@ class _BodyState extends State<Body> {
     return true;
   }
 
-  callback(newAbc) async {
+  _selectedCategory(selectedCategory) async {
     setState(() {
       _loading = true;
     });
-    final xa = await getProducts(newAbc);
-    if (xa) {
+    final result = await getProducts(selectedCategory);
+    if (result) {
       setState(() {
         _loading = false;
       });
@@ -69,7 +72,7 @@ class _BodyState extends State<Body> {
                   .copyWith(fontWeight: FontWeight.bold),
             ),
           ),
-          Categories(callback),
+          Categories(_selectedCategory),
           _loading
               ? Center(
                   child: CircularProgressIndicator(),
@@ -88,31 +91,15 @@ class _BodyState extends State<Body> {
                       ),
                       itemBuilder: (context, index) => ItemCard(
                         product: products[index],
-                        press: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DetailsScreen(
-                              product: products[index],
-                            ),
-                          ),
-                        ),
+                        press: () => Navigator.pushNamed(
+                          context, DetailsScreen.routeName, arguments:DetailsPageArguments(product:products[index] ,userInfo: widget.userInfo)
                       ),
                     ),
                   ),
-                ),
-          kConnectionError
-              ? MaterialBanner(
-                  content: const Text('Database Connection Error'),
-                  leading: CircleAvatar(child: Icon(Icons.delete)),
-                  actions: [
-                    TextButton(
-                      child: const Text('Contact'),
-                      onPressed: () {},
-                    ),
-                  ],
                 )
-              : Container()
-        ]);
+        )
+    ]
+    );
   }
 
   Future<bool> getCategories() async {

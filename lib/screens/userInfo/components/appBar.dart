@@ -2,12 +2,11 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/screens/userInfo/userInfo.dart';
+import 'package:shop_app/basicFiles/constants.dart';
+import 'package:shop_app/screens/cart/cart_screen.dart';
 import 'package:shop_app/services/cartServices/cartCounter.dart';
-import '../basicFiles/constants.dart';
-import 'cart/cart_screen.dart';
 
-AppBar buildAppBar(BuildContext context,String userInfo) {
+AppBar userPageAppBar(BuildContext context, String userInfo) {
   return AppBar(
       elevation: 5,
       leading: IconButton(
@@ -16,18 +15,12 @@ AppBar buildAppBar(BuildContext context,String userInfo) {
           Navigator.pop(context);
         },
       ),
+      title: Text('Profile',style: TextStyle(fontWeight: FontWeight.w400),),
       actions: <Widget>[
-        IconButton(
-          icon: SvgPicture.asset(
-            "assets/icons/search.svg",
-            // By default our  icon color is white
-            color: kTextColor,
-          ),
-          onPressed: () {},
-        ),
         GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, CartScreen.routeName, arguments:CartScreenPageArguments(userInfo: userInfo));
+            Navigator.pushNamed(context, CartScreen.routeName,
+                arguments: CartScreenPageArguments(userInfo: userInfo));
           },
           child: Badge(
             position: BadgePosition.topEnd(top: 0, end: -10),
@@ -47,12 +40,5 @@ AppBar buildAppBar(BuildContext context,String userInfo) {
           ),
         ),
         SizedBox(width: kDefaultPaddin / 2),
-        IconButton(
-          icon: Icon(Icons.account_circle_outlined),
-          onPressed: () {
-            Navigator.pushNamed(context, UserInfo.routeName, arguments:UserPageArguments(userInfo: userInfo));
-          },
-        ),
-        SizedBox(width: kDefaultPaddin / 2)
       ]);
 }

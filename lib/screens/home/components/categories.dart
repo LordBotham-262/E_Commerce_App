@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/models/productType.dart';
 
-import '../../../constants.dart';
+import '../../../basicFiles/constants.dart';
 import 'body.dart';
 
 // We need stateful widget for our categories
@@ -59,6 +59,7 @@ class _CategoriesState extends State<Categories> {
             Text(
               categories[index].toString(),
               style: TextStyle(
+                fontSize: 13,
                 fontWeight: FontWeight.bold,
                 color: selectedIndex == index ? kTextColor : kTextLightColor,
               ),
@@ -74,5 +75,4 @@ class _CategoriesState extends State<Categories> {
       ),
     );
   }
-
 }

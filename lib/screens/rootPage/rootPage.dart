@@ -1,13 +1,12 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/screens/login/login_Screen.dart';
-import 'package:shop_app/services/auth.dart';
+import 'package:shop_app/screens/userInfo/userInfo.dart';
+import 'package:shop_app/services/authProvider.dart';
 
 class RootPage extends StatefulWidget {
-  RootPage({this.auth});
-  final BaseAuth auth;
+  static String routeName = '/root';
 
   @override
   _RootPageState createState() => _RootPageState();
@@ -17,21 +16,50 @@ enum AuthStatus { notSignedIn, SignedIn }
 
 class _RootPageState extends State<RootPage> {
   AuthStatus authStatus = AuthStatus.notSignedIn;
-  @override
-  void initState() {
-    super.initState();
+  String userInfo;
+  var args;
 
-    widget.auth.currentUser().then((userId) {
-      setState(() {
-        authStatus =
-            userId == null ? AuthStatus.notSignedIn : AuthStatus.SignedIn;
-      });
-    });
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // var auth = AuthProvider.of(context).auth;
+    // auth.currentUser().then((userId) {
+    //   setState(() {
+    //     userInfo = userId;
+    //     authStatus =
+    //         userId == null ? AuthStatus.notSignedIn : AuthStatus.SignedIn;
+    //   });
+    // });
+    getUserInfo();
   }
+
+  getUserInfo() async{
+  var auth = AuthProvider.of(context).auth;
+  await auth.currentUser().then((userId) {
+  setState(() {
+  userInfo = userId;
+  authStatus =
+  userId == null ? AuthStatus.notSignedIn : AuthStatus.SignedIn;
+  });
+  });
+}
 
   void _signedIn() {
     setState(() {
+      getUserInfo();
       authStatus = AuthStatus.SignedIn;
+    });
+
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        args = ModalRoute.of(context).settings.arguments;
+        if(args != null){ _signedOut();};
+      });
     });
   }
 
@@ -43,17 +71,23 @@ class _RootPageState extends State<RootPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(userInfo);
     switch (authStatus) {
       case AuthStatus.notSignedIn:
         return LoginScreen(
-          auth: widget.auth,
           onSignedIn: _signedIn,
         );
       case AuthStatus.SignedIn:
         return HomeScreen(
-          auth: widget.auth,
           onSignedOut: _signedOut,
+          userInfo : userInfo,
         );
     }
   }
 }
+
+
+// class RootPageArguments {
+//   final AuthStatus auth;
+//   RootPageArguments({@required this.auth});
+// }

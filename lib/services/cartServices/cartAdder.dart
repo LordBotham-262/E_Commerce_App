@@ -1,25 +1,32 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
+import '../../basicFiles/constants.dart';
 
-import '../constants.dart';
-
-Future<http.Response> addItemToCart(int id, int size, int noOfItems) {
-  return http.post(
-    Uri.parse(KServerPath + 'cart/user_id/1'),
+Future<int> addItemToCart(String userId, int productId, int size, int noOfItems) async {
+  final response = await http.post(
+    Uri.parse(KServerPath + 'cart/user_id/' + userId),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: json.encoder.convert(
-        CartItemList([CartItem(productId: id, size: 1, quantity: noOfItems)])),
+        CartItemList([CartItem(productId: productId, size: 1, quantity: noOfItems)])),
   );
+  if (response.statusCode == 201) {
+    var cartCount = 0;
+    var res = json.decode(response.body);
+    res.forEach((abc) {
+      cartCount = abc['cartCount'];
+    });
+
+    return cartCount;
+  } else {
+    throw Exception('Failed to add product');
+  }
 }
 
 class CartItemList {
   CartItemList(this.cartItems);
-
   List<CartItem> cartItems;
-
   Map<String, dynamic> toJson() => <String, dynamic>{
         'cartItems': cartItems,
       };
